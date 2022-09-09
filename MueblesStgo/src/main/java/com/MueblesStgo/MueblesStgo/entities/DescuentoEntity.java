@@ -12,7 +12,6 @@ public class DescuentoEntity {
     private Long id;
     private float tiempoRetraso;
     private float montoDescuento;
-    private boolean justificativo;
     private float cotizacionPrevisional;
     private float cotizacionPlanSalud;
 
@@ -38,14 +37,6 @@ public class DescuentoEntity {
 
     public void setMontoDescuento(float montoDescuento) {
         this.montoDescuento = montoDescuento;
-    }
-
-    public boolean isJustificativo() {
-        return justificativo;
-    }
-
-    public void setJustificativo(boolean justificativo) {
-        this.justificativo = justificativo;
     }
 
     public float getCotizacionPrevisional() {
