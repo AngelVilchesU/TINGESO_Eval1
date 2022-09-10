@@ -1,12 +1,12 @@
 package com.MueblesStgo.MueblesStgo.repositories;
 
-import com.MueblesStgo.MueblesStgo.entities.ArchivoEntity;
+import com.MueblesStgo.MueblesStgo.entities.JustificativoEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 
 @Repository
-public interface ArchivoRepository extends CrudRepository<ArchivoEntity, Long> {
+public interface JustificativoRepository extends CrudRepository<JustificativoEntity, Long> {
 
 }

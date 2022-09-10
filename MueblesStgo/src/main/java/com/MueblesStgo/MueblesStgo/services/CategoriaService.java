@@ -12,11 +12,30 @@ public class CategoriaService {
     @Autowired
     CategoriaRepository categoriaRepository;
 
+    /*
+    El siguiente método retorna un arreglo el cual contiene TODAS las categorias de la base de datos
+     */
     public ArrayList<CategoriaEntity> obtenerCategoria(){
         return (ArrayList<CategoriaEntity>) categoriaRepository.findAll();
     }
 
+    /*
+    El siguiente método permite guardar una categoria en la base de datos
+     */
     public CategoriaEntity guardarCategoria(CategoriaEntity categoria){
         return categoriaRepository.save(categoria);
+    }
+
+    /*
+    El siguiente método permite eliminar una categoria de la base de datos con su ID
+     */
+    public boolean eliminarCategoria(Long id){
+        try {
+            categoriaRepository.deleteById(id);
+            return true;
+        }
+        catch (Exception err){
+            return false;
+        }
     }
 }

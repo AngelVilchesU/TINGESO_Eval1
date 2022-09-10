@@ -2,21 +2,31 @@ package com.MueblesStgo.MueblesStgo.entities;
 import javax.persistence.Entity;
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Date;
 
-@Entity // Modelo real
-@Table(name = "Empleado") // Control del nombre de la tabla en la BD
+@Entity // Indica que corresponde a una entidad de persistencia
+@Table(name = "Empleado") // Nombre que adoptará la base de datos
 public class EmpleadoEntity {
-    @Id // El dato corresponde a un Identificador
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // El Id se genera de forma automatica incrementable
-    @Column(unique = true, nullable = false) // El Id es unico y no debe ser nulo
+
+    // Atributos
+    @Id // Permite que la BD visualice el ID como tal
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generado automáticamente e incrementable
+    @Column(unique = true, nullable = false) // Es único y no puede ser nulo
     private Long id;
     private String rut;
     private String nombre;
     private String apellido;
-    private LocalDate fechaNacimiento;
+    private LocalDate fechaNacimiento; // Ejemplo de tipo de dato LocalDate: 2022-10-10
     private LocalDate fechaIngresoEmpresa;
+
+    // Métodos (Constructor, getters y setters)
+    public EmpleadoEntity(Long id, String rut, String nombre, String apellido, LocalDate fechaNacimiento, LocalDate fechaIngresoEmpresa) {
+        this.id = id;
+        this.rut = rut;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.fechaNacimiento = fechaNacimiento;
+        this.fechaIngresoEmpresa = fechaIngresoEmpresa;
+    }
     public Long getId() {
         return id;
     }
@@ -52,5 +62,7 @@ public class EmpleadoEntity {
     }
     public void setFechaIngresoEmpresa(LocalDate fechaIngresoEmpresa) {
         this.fechaIngresoEmpresa = fechaIngresoEmpresa;
+    }
+    public EmpleadoEntity() {
     }
 }

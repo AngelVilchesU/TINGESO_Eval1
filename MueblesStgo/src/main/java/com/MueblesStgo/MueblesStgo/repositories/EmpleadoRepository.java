@@ -8,6 +8,10 @@ import java.util.ArrayList;
 
 @Repository
 public interface EmpleadoRepository extends CrudRepository<EmpleadoEntity, Long> {
-    public abstract ArrayList<EmpleadoEntity> findByNombre(String nombre);
+
+    /*
+    El siguiente método permite retornar el usuario desde la base de datos
+    con el rut que sea ingresado
+     */
     public abstract ArrayList<EmpleadoEntity> findByRut(String rut);
 }

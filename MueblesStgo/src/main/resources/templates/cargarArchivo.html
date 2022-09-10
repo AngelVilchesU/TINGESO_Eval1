@@ -11,7 +11,7 @@ xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <h1>Subir archivo DATA.txt</h1>
     <div>
         <label for="formFileLg" class="form-label">Ingrese el archivo DATA.txt</label>
-        <form th:action="@{/subir}" method="post" enctype="multipart/form-data">
+        <form th:action="@{/archivo/cargarArchivo}" method="post" enctype="multipart/form-data">
             <input class="form-control form-control-lg" id="formFileLg" type="file" name="DATA">
             <input type="submit" value="Subir">
         </form>
