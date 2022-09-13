@@ -2,6 +2,7 @@ package com.MueblesStgo.MueblesStgo.entities;
 import javax.persistence.Entity;
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity // Indica que corresponde a una entidad de persistencia
 @Table(name = "Empleado") // Nombre que adoptará la base de datos
@@ -17,6 +18,19 @@ public class EmpleadoEntity {
     private String apellido;
     private LocalDate fechaNacimiento; // Ejemplo de tipo de dato LocalDate: 2022-10-10
     private LocalDate fechaIngresoEmpresa;
+
+    // Relaciones
+    @OneToOne
+    @JoinColumn(name = "Categoria")
+    CategoriaEntity categoria;
+
+    @OneToOne
+    @JoinColumn(name = "Bonificacion")
+    BonificacionEntity bonificacion;
+
+    @OneToOne
+    @JoinColumn(name = "Sueldo")
+    SueldoEntity sueldo;
 
     // Métodos (Constructor, getters y setters)
     public EmpleadoEntity(Long id, String rut, String nombre, String apellido, LocalDate fechaNacimiento, LocalDate fechaIngresoEmpresa) {
@@ -62,6 +76,24 @@ public class EmpleadoEntity {
     }
     public void setFechaIngresoEmpresa(LocalDate fechaIngresoEmpresa) {
         this.fechaIngresoEmpresa = fechaIngresoEmpresa;
+    }
+    public CategoriaEntity getCategoria() {
+        return categoria;
+    }
+    public void setCategoria(CategoriaEntity categoria) {
+        this.categoria = categoria;
+    }
+    public BonificacionEntity getBonificacion() {
+        return bonificacion;
+    }
+    public void setBonificacion(BonificacionEntity bonificacion) {
+        this.bonificacion = bonificacion;
+    }
+    public SueldoEntity getSueldo() {
+        return sueldo;
+    }
+    public void setSueldo(SueldoEntity sueldo) {
+        this.sueldo = sueldo;
     }
     public EmpleadoEntity() {
     }

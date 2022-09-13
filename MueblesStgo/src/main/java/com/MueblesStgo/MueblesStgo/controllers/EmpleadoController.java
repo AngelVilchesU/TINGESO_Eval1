@@ -37,7 +37,7 @@ public class EmpleadoController {
 
 
     @GetMapping("/query") // /empleado/query?rut=20.996.064-8
-    public ArrayList<EmpleadoEntity> obtenerEmpleadoPorRut(@RequestParam("rut") String rut){
+    public EmpleadoEntity obtenerEmpleadoPorRut(@RequestParam("rut") String rut){
         return this.empleadoService.obtenerPorRut(rut);
     }
 

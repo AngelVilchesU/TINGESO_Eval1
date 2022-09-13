@@ -1,6 +1,8 @@
 package com.MueblesStgo.MueblesStgo.controllers;
 
+import com.MueblesStgo.MueblesStgo.entities.EmpleadoEntity;
 import com.MueblesStgo.MueblesStgo.entities.JustificativoEntity;
+import com.MueblesStgo.MueblesStgo.services.EmpleadoService;
 import com.MueblesStgo.MueblesStgo.services.JustificativoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,9 @@ import java.util.ArrayList;
 public class JustificativoController {
     @Autowired
     JustificativoService justificativoService;
+
+    @Autowired
+    EmpleadoService empleadoService;
 
     /*
         El siguiente método permite redireccionar a la vista (ingresarJustificativo.html) mediante el
@@ -52,6 +57,9 @@ public class JustificativoController {
         just.setRutEmpleado(r);
         LocalDate fechaFormato = justificativoService.fechaFormato(f);
         just.setFechaInasistencia(fechaFormato);
+        EmpleadoEntity empleado = new EmpleadoEntity();
+        empleado = empleadoService.obtenerPorRut(r);
+        just.setEmpleado(empleado);
         justificativoService.guardarJustificativo(just);
         return new RedirectView("/justificativo/ingresarJustificativo");
 

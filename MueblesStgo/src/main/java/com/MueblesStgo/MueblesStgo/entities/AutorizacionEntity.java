@@ -15,6 +15,11 @@ public class AutorizacionEntity {
     private LocalDate fechaHoraExtra; // Ejemplo de tipo de dato LocalDate: 2022-09-11
     private String rutEmpleado;
 
+    // Relaciones
+    @ManyToOne
+    @JoinColumn(name = "Empleado")
+    EmpleadoEntity empleado;
+
     // Métodos (Constructor, getters y setters)
     public AutorizacionEntity(Long id, LocalDate fechaHoraExtra, String rutEmpleado) {
         this.id = id;
@@ -38,6 +43,12 @@ public class AutorizacionEntity {
     }
     public void setRutEmpleado(String rutEmpleado) {
         this.rutEmpleado = rutEmpleado;
+    }
+    public EmpleadoEntity getEmpleado() {
+        return empleado;
+    }
+    public void setEmpleado(EmpleadoEntity empleado) {
+        this.empleado = empleado;
     }
     public AutorizacionEntity() {
     }

@@ -1,5 +1,7 @@
 package com.MueblesStgo.MueblesStgo.entities;
 
+import lombok.NonNull;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -14,6 +16,11 @@ public class JustificativoEntity {
     private Long id;
     private LocalDate fechaInasistencia; // Ejemplo de tipo de dato LocalDate: 2002-08-04
     private String rutEmpleado;
+
+    // Relaciones
+    @ManyToOne
+    @JoinColumn(name = "Empleado")
+    EmpleadoEntity empleado;
 
     // Métodos (Constructor, getters y setters)
     public JustificativoEntity(Long id, LocalDate fechaInasistencia, String rutEmpleado) {
@@ -38,6 +45,12 @@ public class JustificativoEntity {
     }
     public void setFechaInasistencia(LocalDate fechaInasistencia) {
         this.fechaInasistencia = fechaInasistencia;
+    }
+    public EmpleadoEntity getEmpleado() {
+        return empleado;
+    }
+    public void setEmpleado(EmpleadoEntity empleado) {
+        this.empleado = empleado;
     }
     public JustificativoEntity() {}
 }

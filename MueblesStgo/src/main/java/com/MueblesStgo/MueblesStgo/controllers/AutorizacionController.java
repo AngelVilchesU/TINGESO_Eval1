@@ -1,8 +1,10 @@
 package com.MueblesStgo.MueblesStgo.controllers;
 
 import com.MueblesStgo.MueblesStgo.entities.AutorizacionEntity;
+import com.MueblesStgo.MueblesStgo.entities.EmpleadoEntity;
 import com.MueblesStgo.MueblesStgo.entities.JustificativoEntity;
 import com.MueblesStgo.MueblesStgo.services.AutorizacionService;
+import com.MueblesStgo.MueblesStgo.services.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +18,9 @@ import java.util.ArrayList;
 public class AutorizacionController {
     @Autowired
     AutorizacionService autorizacionService;
+
+    @Autowired
+    EmpleadoService empleadoService;
 
     /*
     El siguiente método permite redireccionar a la vista (ingresarAutorizacion.html) mediante el
@@ -53,6 +58,9 @@ public class AutorizacionController {
         aut.setRutEmpleado(r);
         LocalDate fechaFormato = autorizacionService.fechaFormato(f);
         aut.setFechaHoraExtra(fechaFormato);
+        EmpleadoEntity empleado = new EmpleadoEntity();
+        empleado = empleadoService.obtenerPorRut(r);
+        aut.setEmpleado(empleado);
         autorizacionService.guardarAutorizacion(aut);
         return new RedirectView("/autorizacion/ingresarAutorizacion");
 

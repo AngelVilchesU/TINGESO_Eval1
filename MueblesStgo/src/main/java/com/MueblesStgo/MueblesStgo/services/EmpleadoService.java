@@ -29,7 +29,7 @@ public class EmpleadoService {
     /*
     El siguiente método permite retornar un empleado de acuerdo con su rut
      */
-    public ArrayList<EmpleadoEntity> obtenerPorRut(String rut){
+    public EmpleadoEntity obtenerPorRut(String rut){
         return empleadoRepository.findByRut(rut);
     }
 

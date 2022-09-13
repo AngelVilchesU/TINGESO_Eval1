@@ -13,5 +13,5 @@ public interface EmpleadoRepository extends CrudRepository<EmpleadoEntity, Long>
     El siguiente método permite retornar el usuario desde la base de datos
     con el rut que sea ingresado
      */
-    public abstract ArrayList<EmpleadoEntity> findByRut(String rut);
+    public abstract EmpleadoEntity findByRut(String rut);
 }
