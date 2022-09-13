@@ -1,7 +1,7 @@
 package com.MueblesStgo.MueblesStgo.services;
 
-import com.MueblesStgo.MueblesStgo.entities.JustificativoEntity;
-import com.MueblesStgo.MueblesStgo.repositories.JustificativoRepository;
+import com.MueblesStgo.MueblesStgo.entities.AutorizacionEntity;
+import com.MueblesStgo.MueblesStgo.repositories.AutorizacionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,22 +9,22 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 @Service
-public class JustificativoService {
+public class AutorizacionService {
     @Autowired
-    JustificativoRepository justificativoRepository;
+    AutorizacionRepository autorizacionRepository;
 
     /*
-    El siguiente método retorna un arreglo el cual contiene TODOS justificativos de la base de datos
+    El siguiente método retorna un arreglo el cual contiene TODAS las autorizaciones de la base de datos
      */
-    public ArrayList<JustificativoEntity> obtenerJustificativos(){
-        return (ArrayList<JustificativoEntity>) justificativoRepository.findAll();
+    public ArrayList<AutorizacionEntity> obtenerAutorizaciones(){
+        return (ArrayList<AutorizacionEntity>) autorizacionRepository.findAll();
     }
 
     /*
-    El siguiente método permite guardar un justificativos en la base de datos
+    El siguiente método permite guardar una autorización en la base de datos
      */
-    public JustificativoEntity guardarJustificativo(JustificativoEntity justificativo){
-        return justificativoRepository.save(justificativo);
+    public AutorizacionEntity guardarAutorizacion (AutorizacionEntity autorizacion){
+        return autorizacionRepository.save(autorizacion);
     }
 
     /*
