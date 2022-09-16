@@ -1,0 +1,149 @@
+--Query
+--Tabla bonificacion
+{
+    "aniosServicio": 5,
+    "bono": 5
+}
+{
+    "aniosServicio": 10,
+    "bono": 8
+}
+{
+    "aniosServicio": 15,
+    "bono": 11
+}
+{
+    "aniosServicio": 20,
+    "bono": 14
+}
+{
+    "aniosServicio": 25,
+    "bono": 17
+}
+
+--Tabla categoria
+{
+    "categoria": "A",
+    "sueldoFijoMensual": 1700000,
+    "montoPorHora": 25000
+}
+{
+    "categoria": "B",
+    "sueldoFijoMensual": 1200000,
+    "montoPorHora": 20000
+}
+{
+    "categoria": "C",
+    "sueldoFijoMensual": 800000,
+    "montoPorHora": 10000
+}
+
+--Tabla descuento
+{
+    "tiempoTrabajo": "10:00:00",
+    "tiempoRetraso": "00:10:00",
+    "montoDescuento": 1,
+    "cotizacionPrevisional": 10,
+    "cotizacionPlanSalud": 8
+}
+{
+    "tiempoTrabajo": "10:00:00",
+    "tiempoRetraso": "00:25:00",
+    "montoDescuento": 3,
+    "cotizacionPrevisional": 10,
+    "cotizacionPlanSalud": 8
+}
+{
+    "tiempoTrabajo": "10:00:00",
+    "tiempoRetraso": "00:45:00",
+    "montoDescuento": 6,
+    "cotizacionPrevisional": 10,
+    "cotizacionPlanSalud": 8
+}
+{
+    "tiempoTrabajo": "10:00:00",
+    "tiempoRetraso": "01:10:00",
+    "montoDescuento": 15,
+    "cotizacionPrevisional": 10,
+    "cotizacionPlanSalud": 8
+}
+
+--Tabla empleado
+{
+    "rut": "11.111.111-1",
+    "nombre": "Nombre 1",
+    "apellido": "Apellido 1",
+    "fechaNacimiento": "2000-12-01",
+    "fechaIngresoEmpresa": "2022-06-24",
+    "categoria": {
+        "id":1
+    },
+    "Bonificacion": "",
+    "Sueldo": ""
+}
+{
+    "rut": "22.222.222-2",
+    "nombre": "Nombre 2",
+    "apellido": "Apellido 2",
+    "fechaNacimiento": "1990-04-23",
+    "fechaIngresoEmpresa": "2015-11-19",
+    "categoria": {
+        "id":2
+    },
+    "Bonificacion": "",
+    "Sueldo": ""
+}
+{
+    "rut": "33.333.333-3",
+    "nombre": "Nombre 3",
+    "apellido": "Apellido 3",
+    "fechaNacimiento": "1996-07-11",
+    "fechaIngresoEmpresa": "2011-09-01",
+    "categoria": {
+        "id":3
+    },
+    "Bonificacion": "",
+    "Sueldo": ""
+}
+{
+    "rut": "44.444.444-4",
+    "nombre": "Nombre 4",
+    "apellido": "Apellido 4",
+    "fechaNacimiento": "2001-05-17",
+    "fechaIngresoEmpresa": "2006-01-15",
+    "categoria": {
+        "id":1
+    },
+    "Bonificacion": "",
+    "Sueldo": ""
+}
+{
+    "rut": "55.555.555-5",
+    "nombre": "Nombre 5",
+    "apellido": "Apellido 5",
+    "fechaNacimiento": "1995-02-03",
+    "fechaIngresoEmpresa": "2000-04-08",
+    "categoria": {
+        "id":2
+    },
+    "Bonificacion": "",
+    "Sueldo": ""
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,5 +1,6 @@
 package com.MueblesStgo.MueblesStgo.entities;
 import javax.persistence.*;
+import java.time.LocalTime;
 
 @Entity // Indica que corresponde a una entidad de persistencia
 @Table(name = "Descuento") // Nombre que adoptará la base de datos
@@ -10,29 +11,33 @@ public class DescuentoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Generado automáticamente e incrementable
     @Column(unique = true, nullable = false) // Es único y no puede ser nulo
     private Long id;
-    private float tiempoRetraso;
+    private LocalTime tiempoTrabajo;
+    private LocalTime tiempoRetraso;
     private float montoDescuento;
     private float cotizacionPrevisional;
     private float cotizacionPlanSalud;
 
     // Métodos (Constructor, getters y setters)
-    public DescuentoEntity(Long id, float tiempoRetraso, float montoDescuento, float cotizacionPrevisional, float cotizacionPlanSalud) {
+
+    public DescuentoEntity(Long id, LocalTime tiempoTrabajo, LocalTime tiempoRetraso, float montoDescuento, float cotizacionPrevisional, float cotizacionPlanSalud) {
         this.id = id;
+        this.tiempoTrabajo = tiempoTrabajo;
         this.tiempoRetraso = tiempoRetraso;
         this.montoDescuento = montoDescuento;
         this.cotizacionPrevisional = cotizacionPrevisional;
         this.cotizacionPlanSalud = cotizacionPlanSalud;
     }
+
     public Long getId() {
         return id;
     }
     public void setId(Long id) {
         this.id = id;
     }
-    public float getTiempoRetraso() {
+    public LocalTime getTiempoRetraso() {
         return tiempoRetraso;
     }
-    public void setTiempoRetraso(float tiempoRetraso) {
+    public void setTiempoRetraso(LocalTime tiempoRetraso) {
         this.tiempoRetraso = tiempoRetraso;
     }
     public float getMontoDescuento() {
@@ -53,6 +58,15 @@ public class DescuentoEntity {
     public void setCotizacionPlanSalud(float cotizacionPlanSalud) {
         this.cotizacionPlanSalud = cotizacionPlanSalud;
     }
+
+    public LocalTime getTiempoTrabajo() {
+        return tiempoTrabajo;
+    }
+
+    public void setTiempoTrabajo(LocalTime tiempoTrabajo) {
+        this.tiempoTrabajo = tiempoTrabajo;
+    }
+
     public DescuentoEntity() {
     }
 }

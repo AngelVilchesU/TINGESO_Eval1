@@ -39,4 +39,26 @@ public class AutorizacionService {
         LocalDate fechaFormato = LocalDate.of(anio, mes, dia);
         return fechaFormato;
     }
+
+    public boolean tieneAutorizacion(LocalDate fechaHorasExtra, String rutEmpleado){
+        ArrayList<AutorizacionEntity> autorizacionEntityArrayList = obtenerAutorizaciones();
+        for (int i = 0; i < autorizacionEntityArrayList.size(); i++){
+            if(autorizacionEntityArrayList.get(i).getFechaHoraExtra().equals(fechaHorasExtra) &&
+            autorizacionEntityArrayList.get(i).getRutEmpleado().equals(rutEmpleado)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public float horasExtra(LocalDate fechaHorasExtra, String rutEmpleado){
+        ArrayList<AutorizacionEntity> autorizacionEntityArrayList = obtenerAutorizaciones();
+        for (int i = 0; i < autorizacionEntityArrayList.size(); i++){
+            if(autorizacionEntityArrayList.get(i).getFechaHoraExtra().equals(fechaHorasExtra) &&
+                    autorizacionEntityArrayList.get(i).getRutEmpleado().equals(rutEmpleado)){
+                return autorizacionEntityArrayList.get(i).getHorasExtra();
+            }
+        }
+        return 0;
+    }
 }

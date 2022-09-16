@@ -38,4 +38,14 @@ public class CategoriaService {
             return false;
         }
     }
+
+    public float pagoHorasExtra(float horasExtra, char categoria){
+        ArrayList<CategoriaEntity> categoriaEntityArrayList = obtenerCategoria();
+        for (int i = 0; i < categoriaEntityArrayList.size(); i++){
+            if (categoriaEntityArrayList.get(i).getCategoria() == categoria){
+                return categoriaEntityArrayList.get(i).getMontoPorHora() * horasExtra;
+            }
+        }
+        return 0;
+    }
 }

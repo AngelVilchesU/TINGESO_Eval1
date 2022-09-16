@@ -53,7 +53,7 @@ public class AutorizacionController {
         Strings
          */
     @PostMapping("/ingresarAutorizacion")
-    public RedirectView guardarAutorizacion(@RequestParam(name="rut") String r, @RequestParam(name="fecha") String f){
+    public RedirectView guardarAutorizacion(@RequestParam(name="rut") String r, @RequestParam(name="fecha") String f, @RequestParam(name="hora") float h){
         AutorizacionEntity aut = new AutorizacionEntity();
         aut.setRutEmpleado(r);
         LocalDate fechaFormato = autorizacionService.fechaFormato(f);
@@ -61,6 +61,7 @@ public class AutorizacionController {
         EmpleadoEntity empleado = new EmpleadoEntity();
         empleado = empleadoService.obtenerPorRut(r);
         aut.setEmpleado(empleado);
+        aut.setHorasExtra(h);
         autorizacionService.guardarAutorizacion(aut);
         return new RedirectView("/autorizacion/ingresarAutorizacion");
 

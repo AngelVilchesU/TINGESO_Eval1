@@ -14,6 +14,7 @@ public class AutorizacionEntity {
     private Long id;
     private LocalDate fechaHoraExtra; // Ejemplo de tipo de dato LocalDate: 2022-09-11
     private String rutEmpleado;
+    private float horasExtra;
 
     // Relaciones
     @ManyToOne
@@ -21,10 +22,12 @@ public class AutorizacionEntity {
     EmpleadoEntity empleado;
 
     // Métodos (Constructor, getters y setters)
-    public AutorizacionEntity(Long id, LocalDate fechaHoraExtra, String rutEmpleado) {
+    public AutorizacionEntity(Long id, LocalDate fechaHoraExtra, String rutEmpleado, float horasExtra, EmpleadoEntity empleado) {
         this.id = id;
         this.fechaHoraExtra = fechaHoraExtra;
         this.rutEmpleado = rutEmpleado;
+        this.horasExtra = horasExtra;
+        this.empleado = empleado;
     }
     public Long getId() {
         return id;
@@ -50,6 +53,13 @@ public class AutorizacionEntity {
     public void setEmpleado(EmpleadoEntity empleado) {
         this.empleado = empleado;
     }
+    public float getHorasExtra() {
+        return horasExtra;
+    }
+    public void setHorasExtra(float horasExtra) {
+        this.horasExtra = horasExtra;
+    }
+
     public AutorizacionEntity() {
     }
 }

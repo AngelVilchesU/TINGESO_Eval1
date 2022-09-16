@@ -38,4 +38,11 @@ public class BonificacionService {
             return false;
         }
     }
+
+    public float sueldoBonificacionPorcentual(float sueldo, float bPorcentual){
+        float bPorcentajeDecimal = (bPorcentual + 100) / 100; // Conversión de porcentaje a decimal
+        return sueldo * bPorcentajeDecimal - sueldo;
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.MueblesStgo.MueblesStgo.controllers;
 
+import com.MueblesStgo.MueblesStgo.entities.EmpleadoEntity;
 import com.MueblesStgo.MueblesStgo.entities.SueldoEntity;
 import com.MueblesStgo.MueblesStgo.services.SueldoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,4 +32,29 @@ public class SueldoController {
     public SueldoEntity guardarSueldo(@RequestBody SueldoEntity sueldo){
         return this.sueldoService.guardarSueldo(sueldo);
     }
+
+/*
+    @GetMapping("/query") // /query?dia=14&mes=9&anio=2022
+    public void diaSemana(@RequestParam("dia") int dia, @RequestParam("mes") int mes, @RequestParam("anio") int anio){
+        this.sueldoService.diaDeSemana(dia, mes, anio);
+    }
+
+*/
+    /*
+@GetMapping("/query") // /query?dia=14&mes=9&anio=2022
+public void esBisiesto(@RequestParam("anio") int anio){
+    this.sueldoService.esBisiesto(anio);
+}*/
+    /*
+@GetMapping("/query") // /query?dia=14&mes=9&anio=2022
+public void diasDelMes(@RequestParam("mes") int mes, @RequestParam("anio") int anio){
+    this.sueldoService.diasDelMes(mes, anio);
+}
+*/
+@GetMapping("/query") // /query?dia=14&mes=9&anio=2022
+public void calculoPlanillas(@RequestParam("ruta") String ruta, @RequestParam("arr") String arr){
+    this.sueldoService.calculoPlanillas(ruta, arr);
+}
+
+
 }

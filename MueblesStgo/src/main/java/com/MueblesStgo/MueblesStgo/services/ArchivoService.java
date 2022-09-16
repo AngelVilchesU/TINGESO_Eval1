@@ -1,7 +1,9 @@
 package com.MueblesStgo.MueblesStgo.services;
 
 import com.MueblesStgo.MueblesStgo.entities.ArchivoEntity;
+import com.MueblesStgo.MueblesStgo.entities.EmpleadoEntity;
 import com.MueblesStgo.MueblesStgo.repositories.ArchivoRepository;
+import com.MueblesStgo.MueblesStgo.repositories.EmpleadoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ import java.util.Scanner;
 public class ArchivoService {
     @Autowired // Proporciona control de instancias
     ArchivoRepository archivoRepository;
+
+    @Autowired
+    EmpleadoService empleadoService;
     private String nombreArchivo = "DATA.txt"; // constante nombre del archivo a recibir
     private String carpetaDestino="Marcas//"; // constante nombre de la carpeta a crear (si no lo está)
     private final Logger carga = LoggerFactory.getLogger(ArchivoService.class); // registrador de datos de acuerdo a una instancia
@@ -83,7 +88,11 @@ public class ArchivoService {
                 String horaTmp = parte[1];
                 LocalTime hora = LocalTime.parse(horaTmp);
                 String rut = parte[2];
-                guardarMarca(new ArchivoEntity(fecha, hora, rut));
+
+                EmpleadoEntity empleado = new EmpleadoEntity();
+                empleado = empleadoService.obtenerPorRut(rut);
+
+                guardarMarca(new ArchivoEntity(fecha, hora, rut, empleado));
             }
         }
         catch (FileNotFoundException error){

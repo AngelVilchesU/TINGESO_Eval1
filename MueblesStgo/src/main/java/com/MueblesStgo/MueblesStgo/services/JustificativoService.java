@@ -39,4 +39,15 @@ public class JustificativoService {
         LocalDate fechaFormato = LocalDate.of(anio, mes, dia);
         return fechaFormato;
     }
+
+    public boolean estaJustificado(LocalDate fechaInasistencia, String rutEmpleado){
+        ArrayList<JustificativoEntity> justificativoEntityArrayList = obtenerJustificativos();
+        for (int i = 0; i < justificativoEntityArrayList.size(); i++){
+            if (justificativoEntityArrayList.get(i).getRutEmpleado().equals(rutEmpleado) &&
+            justificativoEntityArrayList.get(i).getFechaInasistencia().equals(fechaInasistencia)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

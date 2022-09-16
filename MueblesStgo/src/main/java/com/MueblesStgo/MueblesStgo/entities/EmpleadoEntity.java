@@ -20,17 +20,19 @@ public class EmpleadoEntity {
     private LocalDate fechaIngresoEmpresa;
 
     // Relaciones
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "Categoria")
     CategoriaEntity categoria;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "Bonificacion")
     BonificacionEntity bonificacion;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "Sueldo")
     SueldoEntity sueldo;
+
+
 
     // Métodos (Constructor, getters y setters)
     public EmpleadoEntity(Long id, String rut, String nombre, String apellido, LocalDate fechaNacimiento, LocalDate fechaIngresoEmpresa) {

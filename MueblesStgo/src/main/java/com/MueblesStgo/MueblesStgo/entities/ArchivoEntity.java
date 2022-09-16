@@ -16,12 +16,20 @@ public class ArchivoEntity {
     private LocalTime horaIngresoSalida; // Ejemplo de tipo de dato LocalTime: 15:40:00
     private String rutEmpleado;
 
+    // Relaciones
+    @OneToOne
+    @JoinColumn(name = "Empleado")
+    EmpleadoEntity empleado;
+
     // Métodos (Constructor, getters y setters)
-    public ArchivoEntity(LocalDate fecha, LocalTime horaIngresoSalida, String rutEmpleado) { // Constructor general
+
+    public ArchivoEntity(LocalDate fecha, LocalTime horaIngresoSalida, String rutEmpleado, EmpleadoEntity empleado) {
         this.fecha = fecha;
         this.horaIngresoSalida = horaIngresoSalida;
         this.rutEmpleado = rutEmpleado;
+        this.empleado = empleado;
     }
+
     public Long getId() {
         return id;
     }
@@ -46,5 +54,14 @@ public class ArchivoEntity {
     public void setRutEmpleado(String rutEmpleado) {
         this.rutEmpleado = rutEmpleado;
     }
+
+    public EmpleadoEntity getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(EmpleadoEntity empleado) {
+        this.empleado = empleado;
+    }
+
     public ArchivoEntity() {} // Constructor vacio (controlado)
 }
