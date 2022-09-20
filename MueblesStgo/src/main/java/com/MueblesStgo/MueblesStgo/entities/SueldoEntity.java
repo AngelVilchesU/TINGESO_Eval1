@@ -24,6 +24,7 @@ public class SueldoEntity {
     private float cotizacionPrevisional;
     private float cotizacionSalud;
     private float montoSueldoFinal;
+    private LocalDate fecha;
 
     // Relaciones
     @OneToOne
@@ -32,7 +33,7 @@ public class SueldoEntity {
 
     // Métodos
 
-    public SueldoEntity(String rutEmpleado, String nombreApellido, char categoria, float aniosServicio, float sueldoFijoMensual, float montoBonificacionAniosServicio, float pagoHorasExtra, float descuentos, float sueldoBruto, float cotizacionPrevisional, float cotizacionSalud, float montoSueldoFinal) {
+    public SueldoEntity(String rutEmpleado, String nombreApellido, char categoria, float aniosServicio, float sueldoFijoMensual, float montoBonificacionAniosServicio, float pagoHorasExtra, float descuentos, float sueldoBruto, float cotizacionPrevisional, float cotizacionSalud, float montoSueldoFinal, LocalDate fecha) {
         this.rutEmpleado = rutEmpleado;
         this.nombreApellido = nombreApellido;
         this.categoria = categoria;
@@ -45,6 +46,7 @@ public class SueldoEntity {
         this.cotizacionPrevisional = cotizacionPrevisional;
         this.cotizacionSalud = cotizacionSalud;
         this.montoSueldoFinal = montoSueldoFinal;
+        this.fecha = fecha;
     }
     public Long getId() {
         return id;
@@ -130,6 +132,15 @@ public class SueldoEntity {
     public void setDescuento(DescuentoEntity descuento) {
         this.descuento = descuento;
     }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
     public SueldoEntity() {
     }
 }

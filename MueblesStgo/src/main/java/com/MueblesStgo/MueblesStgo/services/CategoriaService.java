@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 @Service
 public class CategoriaService {
-    @Autowired
+    @Autowired // Proporciona control de instancias
     CategoriaRepository categoriaRepository;
 
     /*
@@ -27,18 +27,9 @@ public class CategoriaService {
     }
 
     /*
-    El siguiente método permite eliminar una categoria de la base de datos con su ID
+    El siguiente método retorna el monto correspondiente al pago de horas extras asociadas
+    a las horas extras realizadas en paralelo con la categoria considerada
      */
-    public boolean eliminarCategoria(Long id){
-        try {
-            categoriaRepository.deleteById(id);
-            return true;
-        }
-        catch (Exception err){
-            return false;
-        }
-    }
-
     public float pagoHorasExtra(float horasExtra, char categoria){
         ArrayList<CategoriaEntity> categoriaEntityArrayList = obtenerCategoria();
         for (int i = 0; i < categoriaEntityArrayList.size(); i++){

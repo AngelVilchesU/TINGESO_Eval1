@@ -5,7 +5,10 @@ import com.MueblesStgo.MueblesStgo.entities.SueldoEntity;
 import com.MueblesStgo.MueblesStgo.services.SueldoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 @RestController
@@ -13,6 +16,32 @@ import java.util.ArrayList;
 public class SueldoController {
     @Autowired
     SueldoService sueldoService;
+
+    /*
+        El siguiente método permite redireccionar a la vista (listarSueldos.html) mediante el
+        uso de ModelAndView quien brinda un servicio que empaqueta datos del modelo y vista
+        juntos en paralelo con su retorno
+         */
+    @RequestMapping("/listarSueldos")
+    public ModelAndView listarSueldos () {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("listarSueldos");
+        ArrayList<SueldoEntity> sueldoEntityArrayList = sueldoService.obtenerSueldo();
+        modelAndView.addObject("sueldos", sueldoEntityArrayList);
+        return modelAndView;
+    }
+
+    /*
+        El siguiente método permite redireccionar a la vista (calcularPlanilla.html) mediante el
+        uso de ModelAndView quien brinda un servicio que empaqueta datos del modelo y vista
+        juntos en paralelo con su retorno
+         */
+    @RequestMapping("/calcularPlanilla")
+    public ModelAndView calcularPlanillaS () {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("calcularPlanilla");
+        return modelAndView;
+    }
 
     /*
     El siguiente método retorna los datos de la presente entidad desde la vista de sueldo,
@@ -33,28 +62,36 @@ public class SueldoController {
         return this.sueldoService.guardarSueldo(sueldo);
     }
 
-/*
+    @PostMapping("/calcularPlanilla") // /query?dia=14&mes=9&anio=2022
+    public RedirectView calculoPlanillas(@RequestParam("ruta") String ruta, @RequestParam("nombreArchivo") String nombreArchivo){
+        sueldoService.calculoPlanillas(ruta, nombreArchivo);
+        return new RedirectView("/sueldo/calcularPlanilla");
+    }
+
+    /*
     @GetMapping("/query") // /query?dia=14&mes=9&anio=2022
     public void diaSemana(@RequestParam("dia") int dia, @RequestParam("mes") int mes, @RequestParam("anio") int anio){
         this.sueldoService.diaDeSemana(dia, mes, anio);
     }
-
-*/
+    */
     /*
-@GetMapping("/query") // /query?dia=14&mes=9&anio=2022
-public void esBisiesto(@RequestParam("anio") int anio){
-    this.sueldoService.esBisiesto(anio);
-}*/
+    @GetMapping("/query") // /query?dia=14&mes=9&anio=2022
+    public void esBisiesto(@RequestParam("anio") int anio){
+        this.sueldoService.esBisiesto(anio);
+    }*/
     /*
-@GetMapping("/query") // /query?dia=14&mes=9&anio=2022
-public void diasDelMes(@RequestParam("mes") int mes, @RequestParam("anio") int anio){
-    this.sueldoService.diasDelMes(mes, anio);
-}
-*/
-@GetMapping("/query") // /query?dia=14&mes=9&anio=2022
-public void calculoPlanillas(@RequestParam("ruta") String ruta, @RequestParam("arr") String arr){
-    this.sueldoService.calculoPlanillas(ruta, arr);
-}
+    @GetMapping("/query") // /query?dia=14&mes=9&anio=2022
+    public void diasDelMes(@RequestParam("mes") int mes, @RequestParam("anio") int anio){
+        this.sueldoService.diasDelMes(mes, anio);
+    }
+    */
 
 
+
+    /*
+    @GetMapping("/listado")
+    public void mostrar(@RequestParam("mes") int mes, @RequestParam("anio") int anio){
+        this.sueldoService.mostrarSueldos(mes, anio);
+    }
+    */
 }

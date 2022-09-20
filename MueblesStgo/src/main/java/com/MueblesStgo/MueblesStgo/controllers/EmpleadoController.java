@@ -33,22 +33,4 @@ public class EmpleadoController {
     public EmpleadoEntity guardarEmpleado(@RequestBody EmpleadoEntity empleado){
         return this.empleadoService.guardarEmpleado(empleado);
     }
-
-
-
-    @GetMapping("/query") // /empleado/query?rut=20.996.064-8
-    public EmpleadoEntity obtenerEmpleadoPorRut(@RequestParam("rut") String rut){
-        return this.empleadoService.obtenerPorRut(rut);
-    }
-
-    @DeleteMapping(path = "/{id}")
-    public String eliminarPorId(@PathVariable("id") Long id){
-        boolean hecho = this.empleadoService.eliminarEmpleado(id);
-        if (hecho){
-            return ("Se ha eliminado el usuario de ID: " + id);
-        }
-        else {
-            return ("No se ha podido eliminar al usuario de ID: " + id);
-        }
-    }
 }

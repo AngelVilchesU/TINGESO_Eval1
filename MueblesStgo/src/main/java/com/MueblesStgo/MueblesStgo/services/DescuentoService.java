@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 @Service
 public class DescuentoService {
-    @Autowired
+    @Autowired // Proporciona control de instancias
     DescuentoRepository descuentoRepository;
 
     /*
@@ -27,6 +27,10 @@ public class DescuentoService {
         return descuentoRepository.save(descuento);
     }
 
+    /*
+    El siguiente método retorna una lista de dos objetos de flotantes correspondientes a
+    dos constantes, cotización previsional y plan de salud respectivamente
+     */
     public float[] obtenerCotizaciones(){
         ArrayList<DescuentoEntity> descuentoEntities = (ArrayList<DescuentoEntity>) descuentoRepository.findAll();
         float[] cotizaciones = new float[2];
@@ -35,6 +39,10 @@ public class DescuentoService {
         return cotizaciones;
     }
 
+    /*
+    El siguiente método retorna las horas (LocalTime) no trabajadas de acuerdo con las horas trabajadas
+    y las horas de trabajo por dia en la empresa
+     */
     public LocalTime tiempoNoTrabajo(LocalTime tiempoTrabajo){
         ArrayList<DescuentoEntity> descuentoEntityArrayList = obtenerDescuento();
         LocalTime tiempoFaltante = descuentoEntityArrayList.get(0).getTiempoTrabajo().minusHours(tiempoTrabajo.getHour());
@@ -43,11 +51,16 @@ public class DescuentoService {
         return tiempoFaltante;
     }
 
+    /*
+    El siguiente método retorna un arreglo de dos flotantes que, de acuerdo con el trabajo
+    faltante o no trabajado, corresponden al descuento a realizar sobre el sueldo y la
+    posibilidad de apelar a justificativo o no
+     */
     public ArrayList<Float> descuento(LocalTime tiempoTrabajoFaltante){
         ArrayList<DescuentoEntity> descuentoEntityArrayList = obtenerDescuento();
         ArrayList<Float> descuentoApelar = new ArrayList<>();
         float porcentajeMinimoDescuento = 0;
-        float puedeApelar = 0;
+        float puedeApelar = 0; // 0 para no, 1 para si
         int aux;
         int i = 0;
         for(i = 0; i < descuentoEntityArrayList.size(); i++){
@@ -63,22 +76,24 @@ public class DescuentoService {
                 return descuentoApelar;
             }
         }
-        descuentoApelar.add(descuentoEntityArrayList.get(i - 1).getMontoDescuento());
-        puedeApelar = puedeApelar + 1;
+        descuentoApelar.add(descuentoEntityArrayList.get(i - 1).getMontoDescuento()); // descuento maximo
+        puedeApelar = puedeApelar + 1; // puede apelar
         descuentoApelar.add(puedeApelar);
         return descuentoApelar;
     }
 
     /*
-    El siguiente método permite eliminar un descuento de la base de datos con su ID
+    El siguiente método retorna el monto resultante tras aplicarle un descuento porcentual
      */
-    public boolean eliminarDescuento(Long id){
-        try {
-            descuentoRepository.deleteById(id);
-            return true;
+    public float aplicacionDescuentos(float sueldo, float porcentajeDescuento){
+        float minimo = 0;
+        float maximo = 100;
+        if (porcentajeDescuento == minimo){
+            return sueldo;
         }
-        catch (Exception err){
-            return false;
+        else if (porcentajeDescuento >= maximo){
+            return 0;
         }
+        return sueldo - (porcentajeDescuento * sueldo) / 100;
     }
 }

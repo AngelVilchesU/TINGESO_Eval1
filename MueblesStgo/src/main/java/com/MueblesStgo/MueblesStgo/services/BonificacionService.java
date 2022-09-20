@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 @Service
 public class BonificacionService {
-    @Autowired
+    @Autowired // Proporciona control de instancias
     BonificacionRepository bonificacionRepository;
 
     /*
@@ -27,22 +27,32 @@ public class BonificacionService {
     }
 
     /*
-    El siguiente método permite eliminar una bonificación de la base de datos con su ID
+    El siguiente método retorna el monto adicional asociado al aumento porcentual de un
+    sueldo ingresado
      */
-    public boolean eliminarBonificacion(Long id){
-        try {
-            bonificacionRepository.deleteById(id);
-            return true;
-        }
-        catch (Exception err){
-            return false;
-        }
-    }
-
     public float sueldoBonificacionPorcentual(float sueldo, float bPorcentual){
         float bPorcentajeDecimal = (bPorcentual + 100) / 100; // Conversión de porcentaje a decimal
         return sueldo * bPorcentajeDecimal - sueldo;
     }
 
-
+    /*
+    El siguiente método retorna el valor porcentual que figura como bonificación de acuerdo a los
+    años de servicio en la empresa
+     */
+    public float bonificacionAniosServicio(float aniosServicio){
+        float bonificacion;
+        int i;
+        ArrayList<BonificacionEntity> bonificacionEntityArrayList = obtenerBonificacion();
+        for (i = 0; i < bonificacionEntityArrayList.size(); i++){
+            if(aniosServicio < bonificacionEntityArrayList.get(i).getAniosServicio()){
+                if (i == 0){
+                    return bonificacion = 0;
+                }
+                else {
+                    return bonificacion = bonificacionEntityArrayList.get(i - 1).getBono();
+                }
+            }
+        }
+        return bonificacion = bonificacionEntityArrayList.get(i - 1).getBono();
+    }
 }

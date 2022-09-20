@@ -3,7 +3,6 @@ package com.MueblesStgo.MueblesStgo.services;
 import com.MueblesStgo.MueblesStgo.entities.ArchivoEntity;
 import com.MueblesStgo.MueblesStgo.entities.EmpleadoEntity;
 import com.MueblesStgo.MueblesStgo.repositories.ArchivoRepository;
-import com.MueblesStgo.MueblesStgo.repositories.EmpleadoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,7 @@ import java.util.Scanner;
 public class ArchivoService {
     @Autowired // Proporciona control de instancias
     ArchivoRepository archivoRepository;
-
-    @Autowired
+    @Autowired // Proporciona control de instancias
     EmpleadoService empleadoService;
     private String nombreArchivo = "DATA.txt"; // constante nombre del archivo a recibir
     private String carpetaDestino="Marcas//"; // constante nombre de la carpeta a crear (si no lo está)
@@ -44,18 +42,16 @@ public class ArchivoService {
         return archivoRepository.save(marca);
     }
 
-
-
     /*
     El siguiente método dado un archivo/file extrae su información ubicandole en una dirección de
     carpeta determinada luego leer su contenido. En este sentido, es importante destacar el uso
     de byte[] como un arreglo de bytes
      */
     public String cargarArchivo(MultipartFile archivo){
-        if (archivo.isEmpty()){
+        if (archivo.isEmpty()){ // Si el archivo está vacio
             return "El archivo no se ha subido exitosamente";
         }
-        else {
+        else { // Caso contrario
             try {
                 byte[] arrayByte = archivo.getBytes(); // se extraen como bytes el contenido del archivo
                 Path ruta = Paths.get(carpetaDestino + archivo.getOriginalFilename()); // ruta destino
@@ -65,7 +61,7 @@ public class ArchivoService {
             catch (IOException error){
                 error.printStackTrace();
             }
-            leerArchivo(carpetaDestino + archivo.getOriginalFilename());
+            leerArchivo(carpetaDestino + archivo.getOriginalFilename()); // llamado a método
             return "El archivo se ha subido exitosamente";
         }
     }
@@ -80,19 +76,17 @@ public class ArchivoService {
         File archivo = new File(ruta);
         try {
             Scanner escaner = new Scanner(archivo);
-            while (escaner.hasNextLine()){
-                String linea = escaner.nextLine();
-                String[] parte = linea.split(";");
-                String fechaTmp = parte[0].replace("/", "-");
-                LocalDate fecha = LocalDate.parse(fechaTmp);
-                String horaTmp = parte[1];
-                LocalTime hora = LocalTime.parse(horaTmp);
-                String rut = parte[2];
-
-                EmpleadoEntity empleado = new EmpleadoEntity();
-                empleado = empleadoService.obtenerPorRut(rut);
-
-                guardarMarca(new ArchivoEntity(fecha, hora, rut, empleado));
+            while (escaner.hasNextLine()){ // Mientras el archivo posea una siguiente linea (no se lea completamente)
+                String linea = escaner.nextLine(); // Se extrae la linea "actual"
+                String[] parte = linea.split(";"); // el string se divide en partes a partir del caracter ";"
+                String fechaTmp = parte[0].replace("/", "-"); // La primera de estas partes contempla la fecha
+                LocalDate fecha = LocalDate.parse(fechaTmp); // El string fecha es convertido a LocalDate
+                String horaTmp = parte[1]; // La segunda parte contempla la hora
+                LocalTime hora = LocalTime.parse(horaTmp); // El string hora es convertido a LocalTime
+                String rut = parte[2]; // La tercera parte contempla el rut
+                EmpleadoEntity empleado = new EmpleadoEntity(); // Se instancia una entidad empleado
+                empleado = empleadoService.obtenerPorRut(rut); // Si el empleado existe (caso normal) se instancia para relacionar a la marca
+                guardarMarca(new ArchivoEntity(fecha, hora, rut, empleado)); // Se guarda la marca en la base de datos
             }
         }
         catch (FileNotFoundException error){

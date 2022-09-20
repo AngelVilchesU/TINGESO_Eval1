@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 @Service
 public class EmpleadoService {
-    @Autowired // Instancia
+    @Autowired // Proporciona control de instancias
     EmpleadoRepository empleadoRepository;
 
     /*
@@ -31,18 +31,5 @@ public class EmpleadoService {
      */
     public EmpleadoEntity obtenerPorRut(String rut){
         return empleadoRepository.findByRut(rut);
-    }
-
-    /*
-    El siguiente método permite eliminar un empleado de la base de datos con su ID
-     */
-    public boolean eliminarEmpleado(Long id){
-        try {
-            empleadoRepository.deleteById(id);
-            return true;
-        }
-        catch (Exception err){
-            return false;
-        }
     }
 }

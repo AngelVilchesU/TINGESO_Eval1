@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 @Service
 public class JustificativoService {
-    @Autowired
+    @Autowired // Proporciona control de instancias
     JustificativoRepository justificativoRepository;
 
     /*
@@ -40,6 +40,10 @@ public class JustificativoService {
         return fechaFormato;
     }
 
+    /*
+    El siguiente método retorna un booleano dependiendo dependiendo de la existencia de una
+    justificacion asociada a una fecha y rut determinados
+     */
     public boolean estaJustificado(LocalDate fechaInasistencia, String rutEmpleado){
         ArrayList<JustificativoEntity> justificativoEntityArrayList = obtenerJustificativos();
         for (int i = 0; i < justificativoEntityArrayList.size(); i++){

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 @Service
 public class AutorizacionService {
-    @Autowired
+    @Autowired // Proporciona control de instancias
     AutorizacionRepository autorizacionRepository;
 
     /*
@@ -40,6 +40,10 @@ public class AutorizacionService {
         return fechaFormato;
     }
 
+    /*
+    El siguiente método retorna un valor booleano dependiendo de la existencia de
+    una autorización asociada a una fecha y rut determinados
+     */
     public boolean tieneAutorizacion(LocalDate fechaHorasExtra, String rutEmpleado){
         ArrayList<AutorizacionEntity> autorizacionEntityArrayList = obtenerAutorizaciones();
         for (int i = 0; i < autorizacionEntityArrayList.size(); i++){
@@ -51,6 +55,10 @@ public class AutorizacionService {
         return false;
     }
 
+    /*
+    El siguiente método retorna las horas extras autorizadas asociadas a una fecha y rut
+    determinados
+     */
     public float horasExtra(LocalDate fechaHorasExtra, String rutEmpleado){
         ArrayList<AutorizacionEntity> autorizacionEntityArrayList = obtenerAutorizaciones();
         for (int i = 0; i < autorizacionEntityArrayList.size(); i++){

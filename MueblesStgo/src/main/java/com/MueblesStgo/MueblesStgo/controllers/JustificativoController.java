@@ -62,7 +62,6 @@ public class JustificativoController {
         just.setEmpleado(empleado);
         justificativoService.guardarJustificativo(just);
         return new RedirectView("/justificativo/ingresarJustificativo");
-
     }
 
 
