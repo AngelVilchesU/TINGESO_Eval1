@@ -3,6 +3,11 @@ import com.MueblesStgo.MueblesStgo.entities.BonificacionEntity;
 import com.MueblesStgo.MueblesStgo.repositories.BonificacionRepository;
 import com.MueblesStgo.MueblesStgo.services.BonificacionService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -15,39 +20,30 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ExtendWith(MockitoExtension.class)
 public class BonificacionServiceTest {
-    @Autowired
+    @Mock
     private BonificacionRepository bonificacionRepository;
 
-    BonificacionService bonificacionService = new BonificacionService();
-    BonificacionEntity bonificacion = new BonificacionEntity();
+    @InjectMocks
+    BonificacionService bonificacionService;
 
     @Test
-    public void guardarBonificacion_obtenerBonificacion(){
-        BonificacionEntity bonificacion1 = new BonificacionEntity();
-        bonificacion1.setId(Long.valueOf("999"));
-        bonificacion1.setAniosServicio(12);
-        bonificacion1.setBono(1000);
-        ArrayList<BonificacionEntity> bonificacionAL = new ArrayList<>();
-        try {
-            bonificacionService.guardarBonificacion(bonificacion1);
-            try {
-                bonificacionAL = bonificacionService.obtenerBonificacion();
-            }
-            catch (Exception err){
-                err.getMessage();
-            }
-        }
-        catch (Exception err){
-            bonificacionRepository.save(bonificacion1);
-            try {
-                bonificacionAL = bonificacionService.obtenerBonificacion();
-            }
-            catch (Exception err2){
-                bonificacionAL = (ArrayList<BonificacionEntity>) bonificacionRepository.findAll();
-            }
-        }
-        assertNotNull(bonificacionAL);
+    public void guardarBonificacion(){
+        BonificacionEntity bonificacion = new BonificacionEntity(Long.valueOf("999"), Float.valueOf("4"), Float.valueOf("100"));
+        Mockito.when(bonificacionRepository.save(bonificacion)).thenReturn(bonificacion);
+        final BonificacionEntity resAct = bonificacionService.guardarBonificacion(bonificacion);
+        assertEquals(bonificacion, resAct);
+    }
+
+    @Test
+    public void obtenerBonificacion(){
+        BonificacionEntity bonificacion = new BonificacionEntity(Long.valueOf("999"), Float.valueOf("4"), Float.valueOf("100"));
+        ArrayList<BonificacionEntity> resExp = new ArrayList<>();
+        resExp.add(bonificacion);
+        Mockito.when((ArrayList<BonificacionEntity>) bonificacionRepository.findAll()).thenReturn(resExp);
+        final ArrayList<BonificacionEntity> resAct = bonificacionService.obtenerBonificacion();
+        assertEquals(resExp, resAct);
     }
 
     @Test
@@ -59,5 +55,14 @@ public class BonificacionServiceTest {
         assertEquals(resExp, resAct);
     }
 
+    @Test
+    public void bonificacionAniosServicio(){
+        BonificacionEntity bonificacion = new BonificacionEntity(Long.valueOf("999"), Float.valueOf("4"), Float.valueOf("100"));
+        ArrayList<BonificacionEntity> resExp = new ArrayList<>();
+        resExp.add(bonificacion);
+        Mockito.when((ArrayList<BonificacionEntity>) bonificacionRepository.findAll()).thenReturn(resExp);
+        float resAct = bonificacionService.bonificacionAniosServicio(Float.valueOf("4"));
+        assertEquals(Float.valueOf("100"), resAct);
+    }
 
 }

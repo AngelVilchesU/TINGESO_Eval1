@@ -3,60 +3,71 @@ import com.MueblesStgo.MueblesStgo.entities.SueldoEntity;
 import com.MueblesStgo.MueblesStgo.repositories.SueldoRepository;
 import com.MueblesStgo.MueblesStgo.services.SueldoService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockReset;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.mock.web.MockRequestDispatcher;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ExtendWith(MockitoExtension.class)
 public class SueldoServiceTest {
-    @Autowired
+    private MockMvc mockMvc;
+    @Mock
     private SueldoRepository sueldoRepository;
 
-    SueldoService sueldoService = new SueldoService();
-    SueldoEntity sueldo = new SueldoEntity();
+    @InjectMocks
+    SueldoService sueldoService;
 
     @Test
-    public void guardarSueldo_obtenerSueldo(){
-        SueldoEntity sueldo1 = new SueldoEntity();
-        sueldo1.setRutEmpleado("12.345.678-9");
-        sueldo1.setNombreApellido("Nombre Apellido");
-        sueldo1.setCategoria('A');
-        sueldo1.setAniosServicio(12);
-        sueldo1.setSueldoFijoMensual(1000);
-        sueldo1.setMontoBonificacionAniosServicio(200);
-        sueldo1.setPagoHorasExtra(50);
-        sueldo1.setDescuentos(Float.valueOf("25"));
-        sueldo1.setSueldoBruto(1500);
-        sueldo1.setCotizacionPrevisional(Float.valueOf("10"));
-        sueldo1.setCotizacionSalud(Float.valueOf("8"));
-        sueldo1.setMontoSueldoFinal(Float.valueOf("900"));
-        sueldo1.setFecha(LocalDate.of(2022,9,19));
-        ArrayList<SueldoEntity> sueldoAL = new ArrayList<>();
-        try {
-            sueldoService.guardarSueldo(sueldo1);
-            try {
-                sueldoAL = sueldoService.obtenerSueldo();
-            }
-            catch (Exception err){
-                err.getMessage();
-            }
-        }
-        catch (Exception err){
-            sueldoRepository.save(sueldo1);
-            try {
-                sueldoAL = sueldoService.obtenerSueldo();
-            }
-            catch (Exception err2){
-                sueldoAL = (ArrayList<SueldoEntity>) sueldoRepository.findAll();
-            }
-        }
-        assertNotNull(sueldoAL);
+    public void guardarSueldo(){
+        SueldoEntity sueldo = new SueldoEntity("12.345.678-9", "Nombre Apellido",
+                'A', Float.valueOf(2), Float.valueOf("1000"), Float.valueOf("100"),
+                Float.valueOf("20"), Float.valueOf("20"), Float.valueOf(1100),
+                Float.valueOf("10"), Float.valueOf("8"), Float.valueOf("900"),
+                LocalDate.of(2022,9,20));
+        Mockito.when(sueldoRepository.save(sueldo)).thenReturn(sueldo);
+        final SueldoEntity resAct = sueldoService.guardarSueldo(sueldo);
+        assertEquals(sueldo, resAct);
+    }
+
+    @Test
+    public void obtenerSueldo(){
+        SueldoEntity sueldo = new SueldoEntity("12.345.678-9", "Nombre Apellido",
+                'A', Float.valueOf(2), Float.valueOf("1000"), Float.valueOf("100"),
+                Float.valueOf("20"), Float.valueOf("20"), Float.valueOf(1100),
+                Float.valueOf("10"), Float.valueOf("8"), Float.valueOf("900"),
+                LocalDate.of(2022,9,20));
+        ArrayList<SueldoEntity> resExp = new ArrayList<>();
+        resExp.add(sueldo);
+        Mockito.when((ArrayList<SueldoEntity>) sueldoRepository.findAll()).thenReturn(resExp);
+        final ArrayList<SueldoEntity> resAct = sueldoService.obtenerSueldo();
+        assertEquals(resExp, resAct);
     }
 
     @Test
@@ -130,4 +141,51 @@ public class SueldoServiceTest {
         int resExp = 29;
         assertEquals(resExp, resAct);
     }
+
+    /*
+    @Test
+    public void calculoPlanillas(){
+        SueldoEntity sueldo = new SueldoEntity("12.345.678-9", "Nombre Apellido",
+                'A', Float.valueOf(2), Float.valueOf("1000"), Float.valueOf("100"),
+                Float.valueOf("20"), Float.valueOf("20"), Float.valueOf(1100),
+                Float.valueOf("10"), Float.valueOf("8"), Float.valueOf("900"),
+                LocalDate.of(2022,9,20));
+        ArrayList<SueldoEntity> resExp = new ArrayList<>();
+        resExp.add(sueldo);
+        Mockito.when((ArrayList<SueldoEntity>) sueldoRepository.findAll()).thenReturn(resExp);
+        //MockMultipartFile archivo = new MockMultipartFile("name.txt", "2022/09/01;08:00;11.111.111-1".getBytes());
+
+        try {
+            ResultActions mo = mockMvc.perform(MockMvcRequestBuilders.multipart("/carpeta")
+                    .file(new MockMultipartFile("name.txt", "2022/09/01;08:00;11.111.111-1".getBytes())))
+                    .andExpect(status().isOk());
+            String mock = String.valueOf(mo);
+            String ruta = String.valueOf(mock);
+            String resAct = sueldoService.calculoPlanillas(ruta,"name.txt");
+            assertEquals("El calculo se ha realizado existosamente", resAct);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+
+
+
+
+
+    }
+
+    @Test
+    public void mostrarSueldos(){
+        SueldoEntity sueldo = new SueldoEntity("12.345.678-9", "Nombre Apellido",
+                'A', Float.valueOf(2), Float.valueOf("1000"), Float.valueOf("100"),
+                Float.valueOf("20"), Float.valueOf("20"), Float.valueOf(1100),
+                Float.valueOf("10"), Float.valueOf("8"), Float.valueOf("900"),
+                LocalDate.of(2022,9,20));
+        ArrayList<SueldoEntity> resExp = new ArrayList<>();
+        resExp.add(sueldo);
+        Mockito.when((ArrayList<SueldoEntity>) sueldoRepository.findAll()).thenReturn(resExp);
+        String resAct = sueldoService.mostrarSueldos(9, 2022);
+        assertEquals("Reporte generado exitosamente", resAct);
+    }
+     */
 }

@@ -12,6 +12,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -49,5 +51,17 @@ public class ArchivoServiceTest {
         assertEquals(resExp, resAct);
     }
 
+    @Test
+    public void cargarArchivo(){
+        MockMultipartFile archivo = new MockMultipartFile("name.txt", "".getBytes());
+        String resAct = archivoService.cargarArchivo(archivo);
+        assertEquals("El archivo no se ha subido exitosamente", resAct);
+    }
 
+    @Test
+    public void cargarArchivo1(){
+        MockMultipartFile archivo = new MockMultipartFile("name.txt", "2022/09/01;08:00;11.111.111-1".getBytes());
+        String resAct = archivoService.cargarArchivo(archivo);
+        assertEquals("El archivo se ha subido exitosamente", resAct);
+    }
 }

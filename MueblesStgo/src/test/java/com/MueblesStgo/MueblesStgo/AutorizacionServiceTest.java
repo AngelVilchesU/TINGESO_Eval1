@@ -1,6 +1,5 @@
 package com.MueblesStgo.MueblesStgo;
 import com.MueblesStgo.MueblesStgo.entities.AutorizacionEntity;
-import com.MueblesStgo.MueblesStgo.entities.EmpleadoEntity;
 import com.MueblesStgo.MueblesStgo.repositories.AutorizacionRepository;
 import com.MueblesStgo.MueblesStgo.services.AutorizacionService;
 import org.junit.jupiter.api.Assertions;
@@ -58,4 +57,43 @@ public class AutorizacionServiceTest {
         assertEquals(resExp, resAct);
     }
 
+    @Test
+    public void tieneAutorizacion(){
+        AutorizacionEntity autorizacion = new AutorizacionEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9", Float.valueOf("2"), null);
+        ArrayList<AutorizacionEntity> resExp = new ArrayList<>();
+        resExp.add(autorizacion);
+        Mockito.when((ArrayList<AutorizacionEntity>) autorizacionRepository.findAll()).thenReturn(resExp);
+        boolean resAct = autorizacionService.tieneAutorizacion(LocalDate.of(2022,9,20), "12.345.678-9");
+        assertEquals(true, resAct);
+    }
+
+    @Test
+    public void noTieneAutorizacion(){
+        AutorizacionEntity autorizacion = new AutorizacionEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9", Float.valueOf("2"), null);
+        ArrayList<AutorizacionEntity> resExp = new ArrayList<>();
+        resExp.add(autorizacion);
+        Mockito.when((ArrayList<AutorizacionEntity>) autorizacionRepository.findAll()).thenReturn(resExp);
+        boolean resAct = autorizacionService.tieneAutorizacion(LocalDate.of(2022,9,20), "12.345.678-8");
+        assertEquals(false, resAct);
+    }
+
+    @Test
+    public void horasExtra(){
+        AutorizacionEntity autorizacion = new AutorizacionEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9", Float.valueOf("2"), null);
+        ArrayList<AutorizacionEntity> resExp = new ArrayList<>();
+        resExp.add(autorizacion);
+        Mockito.when((ArrayList<AutorizacionEntity>) autorizacionRepository.findAll()).thenReturn(resExp);
+        float resAct = autorizacionService.horasExtra(LocalDate.of(2022,9,20), "12.345.678-9");
+        assertEquals(Float.valueOf("2"), resAct);
+    }
+
+    @Test
+    public void noHorasExtra(){
+        AutorizacionEntity autorizacion = new AutorizacionEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9", Float.valueOf("2"), null);
+        ArrayList<AutorizacionEntity> resExp = new ArrayList<>();
+        resExp.add(autorizacion);
+        Mockito.when((ArrayList<AutorizacionEntity>) autorizacionRepository.findAll()).thenReturn(resExp);
+        float resAct = autorizacionService.horasExtra(LocalDate.of(2022,9,20), "12.345.678-8");
+        assertEquals(Float.valueOf("0"), resAct);
+    }
 }

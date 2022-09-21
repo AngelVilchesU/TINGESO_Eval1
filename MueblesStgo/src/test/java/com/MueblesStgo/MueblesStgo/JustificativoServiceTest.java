@@ -4,6 +4,11 @@ import com.MueblesStgo.MueblesStgo.entities.JustificativoEntity;
 import com.MueblesStgo.MueblesStgo.repositories.JustificativoRepository;
 import com.MueblesStgo.MueblesStgo.services.JustificativoService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -15,39 +20,30 @@ import java.util.ArrayList;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ExtendWith(MockitoExtension.class)
 public class JustificativoServiceTest {
-    @Autowired
+    @Mock
     private JustificativoRepository justificativoRepository;
 
-    JustificativoService justificativoService = new JustificativoService();
-    JustificativoEntity justificativo = new JustificativoEntity();
+    @InjectMocks
+    JustificativoService justificativoService;
 
     @Test
-    public void guardarJustificativo_obtenerJustificativo(){
-        JustificativoEntity justificativo1 = new JustificativoEntity();
-        justificativo1.setId(Long.valueOf("999"));
-        justificativo1.setFechaInasistencia(LocalDate.of(2022,9,19));
-        justificativo1.setRutEmpleado("12.345.678-9");
-        ArrayList<JustificativoEntity> justificativoAL = new ArrayList<>();
-        try {
-            justificativoService.guardarJustificativo(justificativo1);
-            try {
-                justificativoAL = justificativoService.obtenerJustificativos();
-            }
-            catch (Exception err){
-                err.getMessage();
-            }
-        }
-        catch (Exception err){
-            justificativoRepository.save(justificativo1);
-            try {
-                justificativoAL = justificativoService.obtenerJustificativos();
-            }
-            catch (Exception err2){
-                justificativoAL = (ArrayList<JustificativoEntity>) justificativoRepository.findAll();
-            }
-        }
-        assertNotNull(justificativoAL);
+    public void guardarJustificativo(){
+        JustificativoEntity justificativo = new JustificativoEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9");
+        Mockito.when(justificativoRepository.save(justificativo)).thenReturn(justificativo);
+        final JustificativoEntity resAct = justificativoService.guardarJustificativo(justificativo);
+        assertEquals(justificativo, resAct);
+    }
+
+    @Test
+    public void obtenerJustificativo(){
+        JustificativoEntity justificativo = new JustificativoEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9");
+        ArrayList<JustificativoEntity> resExp = new ArrayList<>();
+        resExp.add(justificativo);
+        Mockito.when((ArrayList<JustificativoEntity>) justificativoRepository.findAll()).thenReturn(resExp);
+        final ArrayList<JustificativoEntity> resAct = justificativoService.obtenerJustificativos();
+        assertEquals(resExp, resAct);
     }
 
     @Test
@@ -56,5 +52,15 @@ public class JustificativoServiceTest {
         LocalDate resAct = justificativoService.fechaFormato(fechaStr);
         LocalDate resExp = LocalDate.of(2022, 9, 20);
         assertEquals(resExp, resAct);
+    }
+
+    @Test
+    public void estaJustificado(){
+        JustificativoEntity justificativo = new JustificativoEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9");
+        ArrayList<JustificativoEntity> resExp = new ArrayList<>();
+        resExp.add(justificativo);
+        Mockito.when((ArrayList<JustificativoEntity>) justificativoRepository.findAll()).thenReturn(resExp);
+        boolean resAct = justificativoService.estaJustificado(LocalDate.of(2022, 9,20), "12.345.678-9");
+        assertEquals(true, resAct);
     }
 }
