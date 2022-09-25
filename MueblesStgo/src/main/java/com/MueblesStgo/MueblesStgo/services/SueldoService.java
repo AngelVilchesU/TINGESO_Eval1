@@ -63,14 +63,12 @@ public class SueldoService {
      */
     public boolean esDiaDeSemana(int dia, int mes, int anio){
         DayOfWeek diaSemana = LocalDate.of(anio, mes, dia).getDayOfWeek();
-        Locale spanish = new Locale("es", "ES");
+        new Locale("es", "ES");
         String diaSemanaStr = diaSemana.getDisplayName(TextStyle.FULL, Locale.forLanguageTag("es-ES"));
         if (diaSemanaStr.equals("sábado") || diaSemanaStr.equals("domingo")){
             return false;
         }
-        else {
-            return true;
-        }
+        return true;
     }
 
     /*
@@ -83,9 +81,7 @@ public class SueldoService {
         if ((anio % 1) == 0){
             return true;
         }
-        else {
-            return false;
-        }
+        return false;
     }
 
     /*
@@ -114,8 +110,7 @@ public class SueldoService {
      */
     public String calculoPlanillas(String ruta, String nombreArchivo){
         File archivo = new File(ruta + nombreArchivo);
-        try {
-            Scanner escaner = new Scanner(archivo);
+        try (Scanner escaner = new Scanner(archivo)){
             /*
             Se opta por una solución que evalue el contenido de la carpeta contenedora de las marcas en lugar
             de extraer la información de la BD puesto que se contempla que esta ultima posea información
@@ -141,9 +136,10 @@ public class SueldoService {
                 String rutEmpleado = empleados.get(j).getRut(); // Se extrae el rut del empleado "actual"
                 String nombreApellido = empleados.get(j).getNombre().concat(" " + empleados.get(j).getApellido()); // Se extrae y concatena nombre y apellido del empleado "actual"
                 char categoria = empleados.get(j).getCategoria().getCategoria(); // Se extrae la categoria del empleado "actual"
-                float aniosServicio = anioEvaluado - empleados.get(j).getFechaIngresoEmpresa().getYear(); // Se extrae el año de ingreso a la empresa calculando los años trabajados
+                float anioIngreso = empleados.get(j).getFechaIngresoEmpresa().getYear();
+                float aniosServicio = anioEvaluado - anioIngreso; // Se extrae el año de ingreso a la empresa calculando los años trabajados
                 float sueldoFijoMensual = empleados.get(j).getCategoria().getSueldoFijoMensual(); // Se extrae el sueldo fijo mensual de acuerdo con la categoria
-                float montoBonificacionAniosServicio = bonificacionService.bonificacionAniosServicio(anioEvaluado - empleados.get(j).getFechaIngresoEmpresa().getYear()); // Se extrae la bonificación de años de servicio
+                float montoBonificacionAniosServicio = bonificacionService.bonificacionAniosServicio(aniosServicio); // Se extrae la bonificación de años de servicio
                 float sueldoBruto = sueldoFijoMensual; // Se define tempranamente el sueldo bruto (sin considerar beneficios aún)
                 float cotizacionPrevisional = descuentoService.obtenerCotizaciones()[0]; // Se extrar el porcentaje de descuento figurado por la cotización previsional
                 float cotizacionSalud = descuentoService.obtenerCotizaciones()[1]; // Se extrar el porcentaje de descuento figurado por la cotización salud
@@ -192,9 +188,10 @@ public class SueldoService {
                 }
                 pagoHorasExtra = pagoHorasExtra + categoriaService.pagoHorasExtra(horasExtra, categoria); // Se calcula el pago de horas extra de acuerdo a las horas y categoria
                 pagoAniosServicio = bonificacionService.sueldoBonificacionPorcentual(sueldoFijoMensual, montoBonificacionAniosServicio); // Se adiciona la bonificación por años de servicio
+                sueldoBruto = descuentoService.aplicacionDescuentos(sueldoBruto, descuentos); // Se calcula el sueldo bruto
                 sueldoBruto = sueldoBruto + pagoAniosServicio + pagoHorasExtra; // Se calcula el sueldo bruto
-                descuentos = descuentos + cotizacionPrevisional + cotizacionSalud; // Se adicionan al porcentaje de descuento las cotizaciones
-                montoSueldoFinal = descuentoService.aplicacionDescuentos(sueldoBruto, descuentos); // Se calcula el sueldo final
+                //descuentos = descuentos + cotizacionPrevisional + cotizacionSalud; // Se adicionan al porcentaje de descuento las cotizaciones
+                montoSueldoFinal = descuentoService.aplicacionDescuentos(sueldoBruto, (cotizacionPrevisional + cotizacionSalud)); // Se calcula el sueldo final
                 LocalDate fecha = LocalDate.of(anioEvaluado, mesEvaluado, diasDelMes(mesEvaluado, anioEvaluado));
                 SueldoEntity sueldo = new SueldoEntity(rutEmpleado, nombreApellido, categoria, aniosServicio, sueldoFijoMensual, pagoAniosServicio, pagoHorasExtra, descuentos, sueldoBruto, cotizacionPrevisional, cotizacionSalud, montoSueldoFinal, fecha);
                 guardarSueldo(sueldo); // Se guarda el sueldo calculado en la base de datos

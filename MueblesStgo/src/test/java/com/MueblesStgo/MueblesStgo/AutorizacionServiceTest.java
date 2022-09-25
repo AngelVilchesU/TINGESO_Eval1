@@ -24,7 +24,7 @@ import static org.assertj.core.api.Assertions.*;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
-public class AutorizacionServiceTest {
+class AutorizacionServiceTest {
     @Mock
     private AutorizacionRepository autorizacionRepository;
 
@@ -32,7 +32,7 @@ public class AutorizacionServiceTest {
     AutorizacionService autorizacionService;
 
     @Test
-    public void guardarAutorizacion(){
+    void guardarAutorizacion(){
         AutorizacionEntity autorizacion = new AutorizacionEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9", Float.valueOf("2"), null);
         Mockito.when(autorizacionRepository.save(autorizacion)).thenReturn(autorizacion);
         final AutorizacionEntity resAct = autorizacionService.guardarAutorizacion(autorizacion);
@@ -40,7 +40,7 @@ public class AutorizacionServiceTest {
     }
 
     @Test
-    public void obtenerAutorizacion(){
+    void obtenerAutorizacion(){
         AutorizacionEntity autorizacion = new AutorizacionEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9", Float.valueOf("2"), null);
         ArrayList<AutorizacionEntity> resExp = new ArrayList<>();
         resExp.add(autorizacion);
@@ -58,7 +58,7 @@ public class AutorizacionServiceTest {
     }
 
     @Test
-    public void tieneAutorizacion(){
+    void tieneAutorizacion(){
         AutorizacionEntity autorizacion = new AutorizacionEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9", Float.valueOf("2"), null);
         ArrayList<AutorizacionEntity> resExp = new ArrayList<>();
         resExp.add(autorizacion);
@@ -68,7 +68,7 @@ public class AutorizacionServiceTest {
     }
 
     @Test
-    public void noTieneAutorizacion(){
+    void noTieneAutorizacion(){
         AutorizacionEntity autorizacion = new AutorizacionEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9", Float.valueOf("2"), null);
         ArrayList<AutorizacionEntity> resExp = new ArrayList<>();
         resExp.add(autorizacion);
@@ -78,7 +78,7 @@ public class AutorizacionServiceTest {
     }
 
     @Test
-    public void horasExtra(){
+    void horasExtra(){
         AutorizacionEntity autorizacion = new AutorizacionEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9", Float.valueOf("2"), null);
         ArrayList<AutorizacionEntity> resExp = new ArrayList<>();
         resExp.add(autorizacion);
@@ -88,7 +88,7 @@ public class AutorizacionServiceTest {
     }
 
     @Test
-    public void noHorasExtra(){
+    void noHorasExtra(){
         AutorizacionEntity autorizacion = new AutorizacionEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9", Float.valueOf("2"), null);
         ArrayList<AutorizacionEntity> resExp = new ArrayList<>();
         resExp.add(autorizacion);

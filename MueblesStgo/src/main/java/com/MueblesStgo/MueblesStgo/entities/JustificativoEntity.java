@@ -1,6 +1,5 @@
 package com.MueblesStgo.MueblesStgo.entities;
 
-import lombok.NonNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;

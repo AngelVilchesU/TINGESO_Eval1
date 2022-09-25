@@ -23,7 +23,6 @@ public class ArchivoService {
     ArchivoRepository archivoRepository;
     @Autowired // Proporciona control de instancias
     EmpleadoService empleadoService;
-    private String nombreArchivo = "DATA.txt"; // constante nombre del archivo a recibir
     private String carpetaDestino="Marcas//"; // constante nombre de la carpeta a crear (si no lo está)
     private final Logger carga = LoggerFactory.getLogger(ArchivoService.class); // registrador de datos de acuerdo a una instancia
 
@@ -74,8 +73,7 @@ public class ArchivoService {
      */
     public String leerArchivo(String ruta){
         File archivo = new File(ruta);
-        try {
-            Scanner escaner = new Scanner(archivo);
+        try (Scanner escaner = new Scanner(archivo)){
             while (escaner.hasNextLine()){ // Mientras el archivo posea una siguiente linea (no se lea completamente)
                 String linea = escaner.nextLine(); // Se extrae la linea "actual"
                 String[] parte = linea.split(";"); // el string se divide en partes a partir del caracter ";"

@@ -2,7 +2,6 @@ package com.MueblesStgo.MueblesStgo.controllers;
 
 import com.MueblesStgo.MueblesStgo.entities.AutorizacionEntity;
 import com.MueblesStgo.MueblesStgo.entities.EmpleadoEntity;
-import com.MueblesStgo.MueblesStgo.entities.JustificativoEntity;
 import com.MueblesStgo.MueblesStgo.services.AutorizacionService;
 import com.MueblesStgo.MueblesStgo.services.EmpleadoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +57,7 @@ public class AutorizacionController {
         aut.setRutEmpleado(r);
         LocalDate fechaFormato = autorizacionService.fechaFormato(f);
         aut.setFechaHoraExtra(fechaFormato);
-        EmpleadoEntity empleado = new EmpleadoEntity();
-        empleado = empleadoService.obtenerPorRut(r);
+        EmpleadoEntity empleado = empleadoService.obtenerPorRut(r);
         aut.setEmpleado(empleado);
         aut.setHorasExtra(h);
         autorizacionService.guardarAutorizacion(aut);

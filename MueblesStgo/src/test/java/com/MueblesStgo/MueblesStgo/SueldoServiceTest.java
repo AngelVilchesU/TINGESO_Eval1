@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
-public class SueldoServiceTest {
+class SueldoServiceTest {
     private MockMvc mockMvc;
     @Mock
     private SueldoRepository sueldoRepository;
@@ -45,7 +45,7 @@ public class SueldoServiceTest {
     SueldoService sueldoService;
 
     @Test
-    public void guardarSueldo(){
+    void guardarSueldo(){
         SueldoEntity sueldo = new SueldoEntity("12.345.678-9", "Nombre Apellido",
                 'A', Float.valueOf(2), Float.valueOf("1000"), Float.valueOf("100"),
                 Float.valueOf("20"), Float.valueOf("20"), Float.valueOf(1100),
@@ -57,7 +57,7 @@ public class SueldoServiceTest {
     }
 
     @Test
-    public void obtenerSueldo(){
+    void obtenerSueldo(){
         SueldoEntity sueldo = new SueldoEntity("12.345.678-9", "Nombre Apellido",
                 'A', Float.valueOf(2), Float.valueOf("1000"), Float.valueOf("100"),
                 Float.valueOf("20"), Float.valueOf("20"), Float.valueOf(1100),
@@ -108,38 +108,26 @@ public class SueldoServiceTest {
 
     @Test
     void diasDelMes30(){
-        int mes = 9;
-        int anio = 2022;
-        int resAct = sueldoService.diasDelMes(mes, anio);
-        int resExp = 30;
-        assertEquals(resExp, resAct);
+        int resAct = sueldoService.diasDelMes(9, 2022);
+        assertEquals(30, resAct);
     }
 
     @Test
     void diasDelMes31(){
-        int mes = 10;
-        int anio = 2022;
-        int resAct = sueldoService.diasDelMes(mes, anio);
-        int resExp = 31;
-        assertEquals(resExp, resAct);
+        int resAct = sueldoService.diasDelMes(10, 2022);
+        assertEquals(31, resAct);
     }
 
     @Test
     void diasDelMes28(){
-        int mes = 2;
-        int anio = 2023;
-        int resAct = sueldoService.diasDelMes(mes, anio);
-        int resExp = 28;
-        assertEquals(resExp, resAct);
+        int resAct = sueldoService.diasDelMes(2, 2023);
+        assertEquals(28, resAct);
     }
 
     @Test
     void diasDelMes29(){
-        int mes = 2;
-        int anio = 2024;
-        int resAct = sueldoService.diasDelMes(mes, anio);
-        int resExp = 29;
-        assertEquals(resExp, resAct);
+        int resAct = sueldoService.diasDelMes(2, 2024);
+        assertEquals(29, resAct);
     }
 
     /*

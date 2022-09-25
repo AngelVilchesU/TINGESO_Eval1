@@ -1,6 +1,5 @@
 package com.MueblesStgo.MueblesStgo.controllers;
 
-import com.MueblesStgo.MueblesStgo.entities.EmpleadoEntity;
 import com.MueblesStgo.MueblesStgo.entities.SueldoEntity;
 import com.MueblesStgo.MueblesStgo.services.SueldoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 @RestController
@@ -67,31 +65,4 @@ public class SueldoController {
         sueldoService.calculoPlanillas(ruta, nombreArchivo);
         return new RedirectView("/sueldo/calcularPlanilla");
     }
-
-    /*
-    @GetMapping("/query") // /query?dia=14&mes=9&anio=2022
-    public void diaSemana(@RequestParam("dia") int dia, @RequestParam("mes") int mes, @RequestParam("anio") int anio){
-        this.sueldoService.diaDeSemana(dia, mes, anio);
-    }
-    */
-    /*
-    @GetMapping("/query") // /query?dia=14&mes=9&anio=2022
-    public void esBisiesto(@RequestParam("anio") int anio){
-        this.sueldoService.esBisiesto(anio);
-    }*/
-    /*
-    @GetMapping("/query") // /query?dia=14&mes=9&anio=2022
-    public void diasDelMes(@RequestParam("mes") int mes, @RequestParam("anio") int anio){
-        this.sueldoService.diasDelMes(mes, anio);
-    }
-    */
-
-
-
-    /*
-    @GetMapping("/listado")
-    public void mostrar(@RequestParam("mes") int mes, @RequestParam("anio") int anio){
-        this.sueldoService.mostrarSueldos(mes, anio);
-    }
-    */
 }

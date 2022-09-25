@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
-public class JustificativoServiceTest {
+class JustificativoServiceTest {
     @Mock
     private JustificativoRepository justificativoRepository;
 
@@ -29,7 +29,7 @@ public class JustificativoServiceTest {
     JustificativoService justificativoService;
 
     @Test
-    public void guardarJustificativo(){
+    void guardarJustificativo(){
         JustificativoEntity justificativo = new JustificativoEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9");
         Mockito.when(justificativoRepository.save(justificativo)).thenReturn(justificativo);
         final JustificativoEntity resAct = justificativoService.guardarJustificativo(justificativo);
@@ -37,7 +37,7 @@ public class JustificativoServiceTest {
     }
 
     @Test
-    public void obtenerJustificativo(){
+    void obtenerJustificativo(){
         JustificativoEntity justificativo = new JustificativoEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9");
         ArrayList<JustificativoEntity> resExp = new ArrayList<>();
         resExp.add(justificativo);
@@ -55,7 +55,7 @@ public class JustificativoServiceTest {
     }
 
     @Test
-    public void estaJustificado(){
+    void estaJustificado(){
         JustificativoEntity justificativo = new JustificativoEntity(Long.valueOf("999"), LocalDate.of(2022,9,20), "12.345.678-9");
         ArrayList<JustificativoEntity> resExp = new ArrayList<>();
         resExp.add(justificativo);

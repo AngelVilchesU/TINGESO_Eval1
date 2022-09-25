@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
-public class DescuentoServiceTest {
+class DescuentoServiceTest {
 
     @Mock
     private DescuentoRepository descuentoRepository;
@@ -30,7 +30,7 @@ public class DescuentoServiceTest {
     DescuentoService descuentoService;
 
     @Test
-    public void guardarDescuento(){
+    void guardarDescuento(){
         DescuentoEntity descuento = new DescuentoEntity(Long.valueOf("999"), LocalTime.of(19, 53, 00), LocalTime.of(0,10,0), Float.valueOf("100"), Float.valueOf("10"), Float.valueOf("8"));
         Mockito.when(descuentoRepository.save(descuento)).thenReturn(descuento);
         final DescuentoEntity resAct = descuentoService.guardarDescuento(descuento);
@@ -38,7 +38,7 @@ public class DescuentoServiceTest {
     }
 
     @Test
-    public void obtenerDescuento(){
+    void obtenerDescuento(){
         DescuentoEntity descuento = new DescuentoEntity(Long.valueOf("999"), LocalTime.of(19, 53, 00), LocalTime.of(0,10,0), Float.valueOf("100"), Float.valueOf("10"), Float.valueOf("8"));
         ArrayList<DescuentoEntity> resExp = new ArrayList<>();
         resExp.add(descuento);
@@ -48,7 +48,7 @@ public class DescuentoServiceTest {
     }
 
     @Test
-    public void obtenerCotizaciones(){
+    void obtenerCotizaciones(){
         DescuentoEntity descuento = new DescuentoEntity(Long.valueOf("999"), LocalTime.of(19, 53, 00), LocalTime.of(0,10,0), Float.valueOf("100"), Float.valueOf("10"), Float.valueOf("8"));
         ArrayList<DescuentoEntity> resExp = new ArrayList<>();
         resExp.add(descuento);
@@ -58,7 +58,7 @@ public class DescuentoServiceTest {
     }
 
     @Test
-    public void obtenerCotizaciones1(){
+    void obtenerCotizaciones1(){
         DescuentoEntity descuento = new DescuentoEntity(Long.valueOf("999"), LocalTime.of(19, 53, 00), LocalTime.of(0,10,0), Float.valueOf("100"), Float.valueOf("10"), Float.valueOf("8"));
         ArrayList<DescuentoEntity> resExp = new ArrayList<>();
         resExp.add(descuento);
@@ -68,7 +68,7 @@ public class DescuentoServiceTest {
     }
 
     @Test
-    public void tiempoNoTrabajo(){
+    void tiempoNoTrabajo(){
         DescuentoEntity descuento = new DescuentoEntity(Long.valueOf("999"), LocalTime.of(19, 53, 00), LocalTime.of(0,10,0), Float.valueOf("100"), Float.valueOf("10"), Float.valueOf("8"));
         ArrayList<DescuentoEntity> resExp = new ArrayList<>();
         resExp.add(descuento);
@@ -78,7 +78,7 @@ public class DescuentoServiceTest {
     }
 
     @Test
-    public void descuento(){
+    void descuento(){
         DescuentoEntity descuento = new DescuentoEntity(Long.valueOf("999"), LocalTime.of(19, 53, 00), LocalTime.of(0,10,0), Float.valueOf("100"), Float.valueOf("10"), Float.valueOf("8"));
         ArrayList<DescuentoEntity> resExp = new ArrayList<>();
         resExp.add(descuento);
@@ -89,7 +89,7 @@ public class DescuentoServiceTest {
     }
 
     @Test
-    public void noDescuento(){
+    void noDescuento(){
         DescuentoEntity descuento = new DescuentoEntity(Long.valueOf("999"), LocalTime.of(19, 53, 00), LocalTime.of(0,10,0), Float.valueOf("100"), Float.valueOf("10"), Float.valueOf("8"));
         ArrayList<DescuentoEntity> resExp = new ArrayList<>();
         resExp.add(descuento);
@@ -100,7 +100,7 @@ public class DescuentoServiceTest {
     }
 
     @Test
-    public void inDescuento(){
+    void inDescuento(){
         DescuentoEntity descuento = new DescuentoEntity(Long.valueOf("999"), LocalTime.of(19, 53, 00), LocalTime.of(0,10,0), Float.valueOf("100"), Float.valueOf("10"), Float.valueOf("8"));
         DescuentoEntity descuento1 = new DescuentoEntity(Long.valueOf("998"), LocalTime.of(10, 30, 00), LocalTime.of(0,5,0), Float.valueOf("50"), Float.valueOf("10"), Float.valueOf("8"));
         ArrayList<DescuentoEntity> resExp = new ArrayList<>();
@@ -114,11 +114,8 @@ public class DescuentoServiceTest {
 
     @Test
     void aplicacionDescuentos(){
-        float sueldo = 1000;
-        float porcentajeDescuento = 50;
-        float resAct = descuentoService.aplicacionDescuentos(sueldo, porcentajeDescuento);
-        float resExp = 500;
-        assertEquals(resExp, resAct);
+        float resAct = descuentoService.aplicacionDescuentos(Float.valueOf("1000"), Float.valueOf("50"));
+        assertEquals(Float.valueOf("500"), resAct);
     }
 
     @Test

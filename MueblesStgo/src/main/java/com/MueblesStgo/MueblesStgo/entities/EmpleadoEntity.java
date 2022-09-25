@@ -2,7 +2,6 @@ package com.MueblesStgo.MueblesStgo.entities;
 import javax.persistence.Entity;
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity // Indica que corresponde a una entidad de persistencia
 @Table(name = "Empleado") // Nombre que adoptará la base de datos

@@ -36,8 +36,7 @@ public class AutorizacionService {
         int dia = Integer.parseInt(parte[2]);
         int mes = Integer.parseInt(parte[1]);
         int anio = Integer.parseInt(parte[0]);
-        LocalDate fechaFormato = LocalDate.of(anio, mes, dia);
-        return fechaFormato;
+        return LocalDate.of(anio, mes, dia);
     }
 
     /*

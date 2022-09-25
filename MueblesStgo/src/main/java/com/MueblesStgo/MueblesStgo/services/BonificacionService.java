@@ -40,19 +40,18 @@ public class BonificacionService {
     años de servicio en la empresa
      */
     public float bonificacionAniosServicio(float aniosServicio){
-        float bonificacion;
         int i;
         ArrayList<BonificacionEntity> bonificacionEntityArrayList = obtenerBonificacion();
         for (i = 0; i < bonificacionEntityArrayList.size(); i++){
             if(aniosServicio < bonificacionEntityArrayList.get(i).getAniosServicio()){
                 if (i == 0){
-                    return bonificacion = 0;
+                    return 0;
                 }
                 else {
-                    return bonificacion = bonificacionEntityArrayList.get(i - 1).getBono();
+                    return bonificacionEntityArrayList.get(i - 1).getBono();
                 }
             }
         }
-        return bonificacion = bonificacionEntityArrayList.get(i - 1).getBono();
+        return bonificacionEntityArrayList.get(i - 1).getBono();
     }
 }

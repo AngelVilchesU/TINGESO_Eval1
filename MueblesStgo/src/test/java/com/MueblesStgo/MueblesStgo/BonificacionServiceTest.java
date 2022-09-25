@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
-public class BonificacionServiceTest {
+class BonificacionServiceTest {
     @Mock
     private BonificacionRepository bonificacionRepository;
 
@@ -29,7 +29,7 @@ public class BonificacionServiceTest {
     BonificacionService bonificacionService;
 
     @Test
-    public void guardarBonificacion(){
+    void guardarBonificacion(){
         BonificacionEntity bonificacion = new BonificacionEntity(Long.valueOf("999"), Float.valueOf("4"), Float.valueOf("100"));
         Mockito.when(bonificacionRepository.save(bonificacion)).thenReturn(bonificacion);
         final BonificacionEntity resAct = bonificacionService.guardarBonificacion(bonificacion);
@@ -37,7 +37,7 @@ public class BonificacionServiceTest {
     }
 
     @Test
-    public void obtenerBonificacion(){
+    void obtenerBonificacion(){
         BonificacionEntity bonificacion = new BonificacionEntity(Long.valueOf("999"), Float.valueOf("4"), Float.valueOf("100"));
         ArrayList<BonificacionEntity> resExp = new ArrayList<>();
         resExp.add(bonificacion);
@@ -56,7 +56,7 @@ public class BonificacionServiceTest {
     }
 
     @Test
-    public void bonificacionAniosServicio(){
+    void bonificacionAniosServicio(){
         BonificacionEntity bonificacion = new BonificacionEntity(Long.valueOf("999"), Float.valueOf("4"), Float.valueOf("100"));
         ArrayList<BonificacionEntity> resExp = new ArrayList<>();
         resExp.add(bonificacion);

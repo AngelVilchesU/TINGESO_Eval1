@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
-public class EmpleadoServiceTest {
+class EmpleadoServiceTest {
 
     @Mock
     private EmpleadoRepository empleadoRepository;
@@ -32,7 +32,7 @@ public class EmpleadoServiceTest {
     EmpleadoService empleadoService;
 
     @Test
-    public void guardarEmpleado(){
+    void guardarEmpleado(){
         EmpleadoEntity empleado = new EmpleadoEntity(Long.valueOf("999"), "12.345.678-9", "Nombre", "Apellido", LocalDate.of(2000, 10,8), LocalDate.of(2022, 9,20));
         Mockito.when(empleadoRepository.save(empleado)).thenReturn(empleado);
         final EmpleadoEntity resAct = empleadoService.guardarEmpleado(empleado);
@@ -40,7 +40,7 @@ public class EmpleadoServiceTest {
     }
 
     @Test
-    public void obtenerEmpleado(){
+    void obtenerEmpleado(){
         EmpleadoEntity empleado = new EmpleadoEntity(Long.valueOf("999"), "12.345.678-9", "Nombre", "Apellido", LocalDate.of(2000, 10,8), LocalDate.of(2022, 9,20));
         ArrayList<EmpleadoEntity> resExp = new ArrayList<>();
         resExp.add(empleado);
@@ -50,7 +50,7 @@ public class EmpleadoServiceTest {
     }
 
     @Test
-    public void obtenerPorRut(){
+    void obtenerPorRut(){
         EmpleadoEntity empleado = new EmpleadoEntity(Long.valueOf("999"), "12.345.678-9", "Nombre", "Apellido", LocalDate.of(2000, 10,8), LocalDate.of(2022, 9,20));
         Mockito.when(empleadoRepository.findByRut("12.345.678-9")).thenReturn(empleado);
         final EmpleadoEntity resAct = empleadoService.obtenerPorRut("12.345.678-9");

@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
-public class ArchivoServiceTest {
+class ArchivoServiceTest {
 
     @Mock
     private ArchivoRepository archivoRepository;
@@ -34,7 +34,7 @@ public class ArchivoServiceTest {
     ArchivoService archivoService;
 
     @Test
-    public void guardarMarca(){
+    void guardarMarca(){
         ArchivoEntity archivo = new ArchivoEntity(LocalDate.of(2022, 9,20), LocalTime.of(16,31,00), "12.345.678-9",null);
         Mockito.when(archivoRepository.save(archivo)).thenReturn(archivo);
         final ArchivoEntity resAct = archivoService.guardarMarca(archivo);
@@ -42,7 +42,7 @@ public class ArchivoServiceTest {
     }
 
     @Test
-    public void obtenerMarca(){
+    void obtenerMarca(){
         ArchivoEntity archivo = new ArchivoEntity(LocalDate.of(2022, 9,20), LocalTime.of(16,31,00), "12.345.678-9",null);
         ArrayList<ArchivoEntity> resExp = new ArrayList<>();
         resExp.add(archivo);
@@ -52,14 +52,14 @@ public class ArchivoServiceTest {
     }
 
     @Test
-    public void cargarArchivo(){
+    void cargarArchivo(){
         MockMultipartFile archivo = new MockMultipartFile("name.txt", "".getBytes());
         String resAct = archivoService.cargarArchivo(archivo);
         assertEquals("El archivo no se ha subido exitosamente", resAct);
     }
 
     @Test
-    public void cargarArchivo1(){
+    void cargarArchivo1(){
         MockMultipartFile archivo = new MockMultipartFile("name.txt", "2022/09/01;08:00;11.111.111-1".getBytes());
         String resAct = archivoService.cargarArchivo(archivo);
         assertEquals("El archivo se ha subido exitosamente", resAct);

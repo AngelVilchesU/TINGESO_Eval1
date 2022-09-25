@@ -71,7 +71,7 @@ public class DescuentoService {
                     descuentoApelar.add(puedeApelar);
                     return descuentoApelar;
                 }
-                descuentoApelar.add(descuentoEntityArrayList.get(i).getMontoDescuento());
+                descuentoApelar.add(descuentoEntityArrayList.get(i - 1).getMontoDescuento());
                 descuentoApelar.add(puedeApelar);
                 return descuentoApelar;
             }

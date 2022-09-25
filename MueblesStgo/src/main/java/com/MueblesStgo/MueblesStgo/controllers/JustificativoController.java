@@ -57,8 +57,7 @@ public class JustificativoController {
         just.setRutEmpleado(r);
         LocalDate fechaFormato = justificativoService.fechaFormato(f);
         just.setFechaInasistencia(fechaFormato);
-        EmpleadoEntity empleado = new EmpleadoEntity();
-        empleado = empleadoService.obtenerPorRut(r);
+        EmpleadoEntity empleado = empleadoService.obtenerPorRut(r);
         just.setEmpleado(empleado);
         justificativoService.guardarJustificativo(just);
         return new RedirectView("/justificativo/ingresarJustificativo");

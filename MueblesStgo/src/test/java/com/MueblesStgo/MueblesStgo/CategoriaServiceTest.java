@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
-public class CategoriaServiceTest {
+class CategoriaServiceTest {
 
     @Mock
     private CategoriaRepository categoriaRepository;
@@ -29,7 +29,7 @@ public class CategoriaServiceTest {
     CategoriaService categoriaService;
 
     @Test
-    public void guardarCategoria(){
+    void guardarCategoria(){
         CategoriaEntity categoria = new CategoriaEntity(Long.valueOf("999"), 'A', Float.valueOf("1000"), Float.valueOf("200"));
         Mockito.when(categoriaRepository.save(categoria)).thenReturn(categoria);
         final CategoriaEntity resAct = categoriaService.guardarCategoria(categoria);
@@ -37,7 +37,7 @@ public class CategoriaServiceTest {
     }
 
     @Test
-    public void obtenerCategoria(){
+    void obtenerCategoria(){
         CategoriaEntity categoria = new CategoriaEntity(Long.valueOf("999"), 'A', Float.valueOf("1000"), Float.valueOf("200"));
         ArrayList<CategoriaEntity> resExp = new ArrayList<>();
         resExp.add(categoria);
@@ -47,7 +47,7 @@ public class CategoriaServiceTest {
     }
 
     @Test
-    public void pagoHorasExtra(){
+    void pagoHorasExtra(){
         CategoriaEntity categoria = new CategoriaEntity(Long.valueOf("999"), 'A', Float.valueOf("1000"), Float.valueOf("200"));
         ArrayList<CategoriaEntity> resExp = new ArrayList<>();
         resExp.add(categoria);
@@ -57,7 +57,7 @@ public class CategoriaServiceTest {
     }
 
     @Test
-    public void noPagoHorasExtra(){
+    void noPagoHorasExtra(){
         CategoriaEntity categoria = new CategoriaEntity(Long.valueOf("999"), 'A', Float.valueOf("1000"), Float.valueOf("200"));
         ArrayList<CategoriaEntity> resExp = new ArrayList<>();
         resExp.add(categoria);
