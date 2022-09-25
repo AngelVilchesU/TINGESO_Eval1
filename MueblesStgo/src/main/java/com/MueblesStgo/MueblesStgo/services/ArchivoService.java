@@ -51,6 +51,7 @@ public class ArchivoService {
             return "El archivo no se ha subido exitosamente";
         }
         else { // Caso contrario
+            crearDirectorio();
             try {
                 byte[] arrayByte = archivo.getBytes(); // se extraen como bytes el contenido del archivo
                 Path ruta = Paths.get(carpetaDestino + archivo.getOriginalFilename()); // ruta destino
@@ -91,5 +92,16 @@ public class ArchivoService {
             error.printStackTrace();
         }
         return "El archivo se ha leido existosamente";
+    }
+
+    public boolean crearDirectorio(){
+        File directorio = new File(carpetaDestino);
+        if(!directorio.exists()){
+            directorio.mkdirs();
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
