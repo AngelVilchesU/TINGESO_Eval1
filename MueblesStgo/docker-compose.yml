@@ -9,10 +9,10 @@ services:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: tingeso
     ports:
-      - 33060:3306
+      - 33061:3306
   mueblesstgo:
     container_name: app-web-simple
-    image: angelvilches/mueblesstgo:ultima
+    image: angelvilches/mueblesstgo
     ports:
       - "8080:8080"
     environment:

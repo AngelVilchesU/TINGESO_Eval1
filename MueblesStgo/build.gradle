@@ -30,5 +30,15 @@ dependencies {
 }
 
 tasks.named('test') {
+	environment "DB_URL", "jdbc:mysql://localhost:3306/tingeso"
+	environment "DB_USERNAME", "root"
+	environment "DB_PASSWORD", "4892"
 	useJUnitPlatform()
+}
+
+
+bootRun{
+	environment("DB_URL", "jdbc:mysql://localhost:3306/tingeso")
+	environment("DB_USERNAME", "root")
+	environment("DB_PASSWORD", "4892")
 }
